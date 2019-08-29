@@ -1,0 +1,11 @@
+set const  # Shows line numbers on the bottom
+set linenumbers  # Shows line numbers on side
+set tabsize 4  # Sets tab to four spaces
+set tabstospaces  # Automatically converts tabs to spaces
+set smooth  # Sets smooth-scrolling to default
+set softwrap  # Enables word wrapping.
+set atblanks  # Wraps at spaces instead of just edge of page
+set titlecolor black,cyan  # Red text on a black title bar
+# Colors:
+# white, black, blue, green, red, cyan, yellow, magenta
+# titlecolor, statuscolor, keycolor, functioncolor, numbercolor
