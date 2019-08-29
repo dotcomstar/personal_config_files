@@ -29,3 +29,10 @@ let mapleader=","  " The leader is a comma.
 inoremap jk <esc>
 inoremap ;l <esc>
 inoremap ;' <esc>
+
+" Also helpful commands to note:
+"  Go to the last line of a file: G
+"  Open a new window: sp (on top) or vsp (side to side)
+"  Cut line: dd
+"  Paste from vim clipboard: p
+
