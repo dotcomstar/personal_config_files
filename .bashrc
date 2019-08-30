@@ -120,3 +120,6 @@ fi
  alias rm='rm -i'
  alias cp='cp -i'
  alias mv='mv -i'
+ 
+ # An alias to enable automatic git GPG-key signing
+export GPG_TTY=$(tty)
