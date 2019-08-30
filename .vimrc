@@ -25,10 +25,11 @@ nnoremap k gk
 nnoremap A ^
 nnoremap E $
 let mapleader=","  " The leader is a comma.
-" Remapping 'jk', ';l', and ';'' to escape.
+" Remapping 'jk', ';l', ';'', and ';;' to escape.
 inoremap jk <esc>
 inoremap ;l <esc>
 inoremap ;' <esc>
+inoremap ;; <esc>
 
 " Also helpful commands to note:
 "  Go to the last line of a file: G
