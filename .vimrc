@@ -18,13 +18,16 @@ set incsearch  " Searches as characters are entered.
 set hlsearch  " Highlights matches
 " Turns off search highlight by pressing space.
 nnoremap <leader><space> :nohlsearch<CR>
+
 " Remapping for smoother vertical mobility based on visual lines, not actual lines.
 nnoremap j gj
 nnoremap k gk
+
 " Remapping for nano-esque jumps to the beginning/end of a line.
 nnoremap A ^
 nnoremap E $
 let mapleader=","  " The leader is a comma.
+
 " Remapping 'jk', ';l', ';'', and ';;' to escape.
 inoremap jk <esc>
 inoremap ;l <esc>
@@ -37,3 +40,13 @@ inoremap ;; <esc>
 "  Cut line: dd
 "  Paste from vim clipboard: p
 
+filetype indent off  " This disables auto-indentation.
+set backspace=indent,eol,start  " This allows the backspace key to delete any whitespace.
+
+" Shows trailing whitespace.
+highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+match ExtraWhitespace /\s\+$/
+" Other colors include, Black, DarkBlue, DarkGreen, DarkCyan, DarkRed,
+" DarkMagenta, Brown, DarkYellow, LightGray, LightGrey, Gray, Grey, DarkGray,
+" DarkGrey, Blue, LightBlue, Green, LightGreen, Cyan, LightCyan, Red, LightRed,
+" Magenta, LightMagenta, Yellow, LightYellow, and White.
