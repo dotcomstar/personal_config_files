@@ -40,7 +40,6 @@ inoremap ;; <esc>
 "  Cut line: dd
 "  Paste from vim clipboard: p
 
-" filetype indent off  " This disables auto-indentation.
 set backspace=indent,eol,start  " This allows the backspace key to delete any whitespace.
 
 " Shows trailing whitespace.
