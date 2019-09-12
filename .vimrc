@@ -49,3 +49,11 @@ match ExtraWhitespace /\s\+$/
 " DarkMagenta, Brown, DarkYellow, LightGray, LightGrey, Gray, Grey, DarkGray,
 " DarkGrey, Blue, LightBlue, Green, LightGreen, Cyan, LightCyan, Red, LightRed,
 " Magenta, LightMagenta, Yellow, LightYellow, and White.
+
+" Draws a vertical border at 80 columns
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+  match OverLength /\%81v.\+/
+endif
