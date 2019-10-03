@@ -126,3 +126,6 @@ export GPG_TTY=$(tty)
 
 # Send graphical apps to windows instead of loading natively in the terminal.
 export DISPLAY=:0
+
+# Enable Docker support from Windows Subsystem for Linux
+export DOCKER_HOST=tcp://localhost:2375
