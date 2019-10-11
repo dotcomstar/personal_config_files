@@ -129,3 +129,8 @@ export DISPLAY=:0
 
 # Enable Docker support from Windows Subsystem for Linux
 export DOCKER_HOST=tcp://localhost:2375
+
+# Add path for Ruby support. Dependent on local filesystem architecture.
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
