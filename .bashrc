@@ -121,7 +121,7 @@ fi
  alias cp='cp -i'
  alias mv='mv -i'
 
-# An alias to enable automatic git GPG-key signing
+ # An alias to enable automatic git GPG-key signing
 export GPG_TTY=$(tty)
 
 # Send graphical apps to windows instead of loading natively in the terminal.
@@ -129,3 +129,8 @@ export DISPLAY=:0
 
 # Enable Docker support from Windows Subsystem for Linux
 export DOCKER_HOST=tcp://localhost:2375
+
+# Add path for Ruby support. Dependent on local filesystem architecture.
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"

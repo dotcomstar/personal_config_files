@@ -13,6 +13,8 @@ set mouse=a  " Enables mouse support.
 filetype indent on  " Enables filetype-specific indentation preferences.
 set wildmenu  " Allows for visual autocomplete.
 set lazyredraw  " Speeds up macros by telling vim to only redraw the screen when necessary.
+set timeoutlen=1000  " Used for mapping delays (ms).
+set ttimeoutlen=10  " Used for key code delays (ms).
 set showmatch  " Highlight matches [{()}]
 set incsearch  " Searches as characters are entered.
 set hlsearch  " Highlights matches
@@ -39,6 +41,8 @@ inoremap ;; <esc>
 "  Open a new window: sp (on top) or vsp (side to side)
 "  Cut line: dd
 "  Paste from vim clipboard: p
+"  Insert tab character in insert mode: ctrl + i
+"  Run one command and then return automatically to insert mode
 
 set backspace=indent,eol,start  " This allows the backspace key to delete any whitespace.
 
@@ -57,3 +61,4 @@ else
   highlight OverLength ctermbg=red ctermfg=white guibg=#592929
   2match OverLength /\%81v.\+/
 endif
+
