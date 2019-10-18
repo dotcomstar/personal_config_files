@@ -41,7 +41,9 @@ inoremap ;; <esc>
 "  Open a new window: sp (on top) or vsp (side to side)
 "  Cut line: dd
 "  Paste from vim clipboard: p
-"  Insert tab character in insert mode: ctrl + i
+"  Insert tab character in insert mode: ctrl + v  + tab, or ctrl + q + tab
+"    in windows mode, which is the default. ctrl + i occasionally works, but
+"    is not consistent.
 "  Run one command and then return automatically to insert mode
 
 set backspace=indent,eol,start  " This allows the backspace key to delete any whitespace.
