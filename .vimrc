@@ -51,6 +51,7 @@ vnoremap ;; <esc>
 
 
 " Also helpful commands to note:
+"  Go to the first line of a file: gg
 "  Go to the last line of a file: G
 "  Open a new window: sp (on top) or vsp (side to side)
 "  Cut line: dd
