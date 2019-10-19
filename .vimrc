@@ -25,16 +25,30 @@ nnoremap <leader><space> :nohlsearch<CR>
 nnoremap j gj
 nnoremap k gk
 
-" Remapping for nano-esque jumps to the beginning/end of a line.
+" Remapping for nano-esque jumps to the beginning/end of a line in command mode.
 nnoremap A ^
 nnoremap E $
+nnoremap <C-a> ^
+nnoremap <C-e> $
 let mapleader=","  " The leader is a comma.
 
-" Remapping 'jk', ';l', ';'', and ';;' to escape.
+" Remapping for nano-esque jumps in insert mode.
+inoremap <C-a> <Esc>I
+inoremap <C-e> <Esc>A
+
+" Remapping for nano-esque jumps in visual mode.
+vnoremap <C-a> ^
+vnoremap <C-e> $
+
+" Remapping 'jk', ';l', ';'', and ';;' to escape in insert mode.
 inoremap jk <esc>
 inoremap ;l <esc>
 inoremap ;' <esc>
 inoremap ;; <esc>
+
+" Remapping ';;' to escape in visual mode.
+vnoremap ;; <esc>
+
 
 " Also helpful commands to note:
 "  Go to the last line of a file: G
