@@ -3,6 +3,8 @@ set number  " Shows line numbers.
 set cmdheight=2  " Sets the height of the command bar at the bottom.
 syntax enable  " Enables syntax processing.
 colorscheme darkblue " darkblue and solarized are nice in my opinion.
+" The next line enables background opacity in vim.
+hi Normal guibg=NONE ctermbg=NONE
 set history=500  " How many lines of history to remember.
 set expandtab  " Converts tabs to spaces.
 set softtabstop=4  " Number of spaces to convert a tab to.
@@ -78,4 +80,3 @@ else
   highlight OverLength ctermbg=red ctermfg=white guibg=#592929
   2match OverLength /\%81v.\+/
 endif
-
