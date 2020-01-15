@@ -19,8 +19,11 @@ filetype off  " Reset filetype indentation first...
 filetype indent on  " Enable filetype-specific indentation preferences.
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype golang setlocal tabstop=4 shiftwidth=4
+autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 set expandtab  " Convert tabs to spaces.
 set softtabstop=4  " How many spaces to add and remove for a simulated tab.
+set shiftwidth=4  " Set the default tab stop to 4 spaces.
+set softtabstop=4  " Treat space 'tabs' as a single character.
 set timeoutlen=1000  " Used for mapping delays (ms).
 set ttimeoutlen=10  " Used for key code delays (ms).
 set showmatch  " Highlight matches [{()}]
@@ -28,26 +31,47 @@ set incsearch  " Search as characters are entered.
 set hlsearch  " Highlight matches.
 set number relativenumber  " Display relative line numbers for easier jumping.
 set encoding=UTF-8
+let b:autopairs_loaded=1  " Disable automatic bracket and quote matching by ensuring it never runs.
+set undofile  " Maintain undo history even after exiting a file.
+set backspace=indent,eol,start  " Allow the backspace key to delete any whitespace.
+
+" Reopen vim to the last position.
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" The leader is a space character.
+let mapleader=" "
+
+" Toggle relativenumber.
+nnoremap <leader>n : set invrelativenumber<CR>
 
 " Turn off search highlight by pressing space.
 nnoremap <leader><space> :nohlsearch<CR>
+
+" Search ignoring case, unless the parameter is uppercase.
+set ignorecase
+set smartcase
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+" Toggle spell-check.
+map <F5> :setlocal spell! spelllang=en_us<CR>
+imap <F5> <C-o>:setlocal spell! spelllang=en_us<CR>
+" TODO: Figure out how to enable from visual mode.
+
+" Toggle the ability to keep the cursor in the middle of the screen.
+set scrolloff=999  " Enabled by default.
+nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
 " Remap for smoother vertical mobility based on visual lines, not actual lines.
 noremap <Up> g<Up>
 noremap <Down> g<Down>
 
 " Remap for nano-esque jumps to the beginning/end of a line in command mode.
-nnoremap A ^
-nnoremap E $
 nnoremap <C-a> ^
 nnoremap <C-e> $
-let mapleader=","  " The leader is a comma.
 
 " Remap for nano-esque jumps in insert mode.
 inoremap <C-a> <Esc>I
@@ -66,13 +90,29 @@ inoremap ;; <esc>
 " Remap ';;' to escape in visual mode.
 vnoremap ;; <esc>
 
+" Catch accidental "U" usage.
+nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K.  Y O U  T Y P E D  \"U\". ==== > > "<CR>
 
-" Also helpful commands to note:
-"  Go to the first line of a file: gg
+" Select all.
+nnoremap A ggVG
+" TODO: Return to previous line.
+
+" Copy all to clipboard (only works in NeoVim).
+nnoremap yA gg"+yG''
+" TODO: Only set if NeoVim exists.
+
+" Remap more common undo and redo buttons for non-vimmers.
+nnoremap <C-z> u
+inoremap <C-z> <C-o>u
+nnoremap <C-y> <C-r>
+inoremap <C-y> <C-o><C-r>
+" TODO: Figure out what else is mapped to Ctrl-y.
+
+" Also helpful commands to note:"  Go to the first line of a file: gg
 "  Go to the last line of a file: G
 "  Open a new window: sp (on top) or vsp (side to side)
 "  Cut line: dd
-"  Paste from vim clipboard: p
+"  Paste from Vim clipboard: p
 "  Insert tab character in insert mode: ctrl + v  + tab, or ctrl + q + tab
 "    in windows mode, which is the default. ctrl + i occasionally works, but
 "    is not consistent.
@@ -82,12 +122,15 @@ vnoremap ;; <esc>
 "  Jump down 10 lines: 10j
 "  Access registers: :reg
 "  Copy to clipboard register in nvim: "+y
-
-set backspace=indent,eol,start  " Allow the backspace key to delete any whitespace.
+"  Check spellcheck suggestions: z=
 
 " Show trailing whitespace.
 highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
 match ExtraWhitespace /\s\+$/
+
+" Strip trailing whitespace on file exit.
+autocmd BufWritePre * :%s/\s\+$//e
+
 " Other colors include, Black, DarkBlue, DarkGreen, DarkCyan, DarkRed,
 " DarkMagenta, Brown, DarkYellow, LightGray, LightGrey, Gray, Grey, DarkGray,
 " DarkGrey, Blue, LightBlue, Green, LightGreen, Cyan, LightCyan, Red, LightRed,
@@ -101,14 +144,31 @@ else
   2match OverLength /\%81v.\+/
 endif
 
+" Make netrw file explorer act like NERDTree.
+let g:netrw_liststyle = 3  " Use a tree-style listing in directories.
+let g:netrw_browse_split = 4  " Open files to the right of the tree, in the previous window.
+let g:netrw_altv = 1  " Split on the right side instead of the left.
+let g:netrw_winsize = 18  " Set width of window to 25%.
+let g:netrw_banner = 0  " Disables the banner by default. Toggle with "I".
+let g:netrw_list_hide = &wildignore  " Inherit Vim's wildignores.
+
+" Launch file tree on Vim startup.
+augroup FileTree
+  autocmd VimEnter * :Lexplore
+  autocmd VimEnter * wincmd p  " Jump to the previous (main) window.
+  autocmd VimEnter * TagbarToggle
+augroup END
+
+" Automatically close Vim if netrw is the last open buffer.
+autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' |q|endif
 
 " From https://www.notion.so/NeoVim-Configuration-6611b6768eca4fc38da311f7e86572aa
 
-" NERDTree Shortcut
-nnoremap <C-n> :NERDTreeToggle<C-m>
+" File Tree Shortcut
+nnoremap <C-n> :Lexplore<C-m>
 
 " IDE Mode
-nnoremap <C-i> :NERDTreeToggle<C-m>:TagbarToggle<C-m>
+nnoremap <Tab> :Lexplore<C-m>:TagbarToggle<C-m>
 
 " Vim Plug Plugins
 call plug#begin('~/.vim/plugged')
@@ -133,17 +193,15 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Editor
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-commentary'
-Plug 'xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'ntpeters/vim-better-whitespace'
+"Plug 'ntpeters/vim-better-whitespace'
 Plug 'mhinz/vim-startify'
 
 " Syntax
@@ -164,6 +222,19 @@ let g:go_fmt_command = "goimports"
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
+" Note: This makes vim load too slowly.
+" Automatically load NERDTree and TagbarToggle upon Vim boot.
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * TagbarToggle
+" " Jump to the previous (main) window.
+" autocmd VimEnter * wincmd p
+
+" " Find the current file in NERDTree.
+" map <leader>f :NERDTreeFind<cr>
+
+" " Automatically close Vim if NERDTree is the last open buffer.
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 " Use <tab> for trigger completion and navigate to the next complete item.
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -178,3 +249,11 @@ inoremap <silent><expr> <Tab>
 " Enable tab and shift-tab for navigation through autocompletion suggestions.
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <ENTER> pumvisible() ? "\<C-y>" : "\<ENTER>"
+
+" TODO:
+"   - Figure out why tab triggers IDE mode.
+"   - Make NERDTree automatically switch back to current file if opened with
+"     IDE mode
+"   - Press down on pumvisible for autocompletion, instead of just select for
+"     more consistent experience.
