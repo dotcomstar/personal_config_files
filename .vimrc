@@ -1,4 +1,3 @@
-
 set ruler  " Always show current cursor location.
 set number  " Show line numbers.
 set cmdheight=2  " Set the height of the command bar at the bottom.
