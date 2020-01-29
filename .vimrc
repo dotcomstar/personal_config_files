@@ -251,6 +251,9 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'rust-lang/rust.vim'
 Plug 'rhysd/vim-crystal'
 
+" External Support
+Plug 'ianding1/leetcode.vim'
+
 call plug#end()
 
 " Extra Setup
@@ -283,26 +286,26 @@ set tags=./tags,tags;$HOME
 
 
 " Tabular configurations for common auto-alignment commands.
-nnoremap <leader>a=  :Tabularize /=       <CR>
-vnoremap <leader>a=  :Tabularize /=       <CR>
-nnoremap <leader>A=  :Tabularize /=\zs    <CR>
-vnoremap <leader>A=  :Tabularize /=\zs    <CR>
-nnoremap <leader>a:  :Tabularize /:       <CR>
-vnoremap <leader>a:  :Tabularize /:       <CR>
-nnoremap <leader>A:  :Tabularize /:\zs    <CR>
-vnoremap <leader>A:  :Tabularize /:\zs    <CR>
-nnoremap <leader>a#  :Tabularize /#       <CR>
-vnoremap <leader>a#  :Tabularize /#       <CR>
-nnoremap <leader>A#  :Tabularize /#\zs    <CR>
-vnoremap <leader>A#  :Tabularize /#\zs    <CR>
-nnoremap <leader>a/  :Tabularize /\/\/    <CR>
-vnoremap <leader>a/  :Tabularize /\/\/    <CR>
-nnoremap <leader>A/  :Tabularize /\/\/\zs <CR>
-vnoremap <leader>A/  :Tabularize /\/\/\zs <CR>
-nnoremap <leader>a\| :Tabularize /\|      <CR>
-vnoremap <leader>a\| :Tabularize /\|      <CR>
-nnoremap <leader>A\| :Tabularize /\|\zs   <CR>
-vnoremap <leader>A\| :Tabularize /\|\zs   <CR>
+nnoremap <leader>a=  :Tabularize /=<CR>
+vnoremap <leader>a=  :Tabularize /=<CR>
+nnoremap <leader>A=  :Tabularize /=\zs<CR>
+vnoremap <leader>A=  :Tabularize /=\zs<CR>
+nnoremap <leader>a:  :Tabularize /:<CR>
+vnoremap <leader>a:  :Tabularize /:<CR>
+nnoremap <leader>A:  :Tabularize /:\zs<CR>
+vnoremap <leader>A:  :Tabularize /:\zs<CR>
+nnoremap <leader>a#  :Tabularize /#<CR>
+vnoremap <leader>a#  :Tabularize /#<CR>
+nnoremap <leader>A#  :Tabularize /#\zs<CR>
+vnoremap <leader>A#  :Tabularize /#\zs<CR>
+nnoremap <leader>a/  :Tabularize /\/\/<CR>
+vnoremap <leader>a/  :Tabularize /\/\/<CR>
+nnoremap <leader>A/  :Tabularize /\/\/\zs<CR>
+vnoremap <leader>A/  :Tabularize /\/\/\zs<CR>
+nnoremap <leader>a\| :Tabularize /\|<CR>
+vnoremap <leader>a\| :Tabularize /\|<CR>
+nnoremap <leader>A\| :Tabularize /\|\zs<CR>
+vnoremap <leader>A\| :Tabularize /\|\zs<CR>
 
 
 " Use <tab> for trigger completion and navigate to the next complete item.
@@ -327,3 +330,9 @@ inoremap <expr> <ENTER> pumvisible() ? "\<C-y>" : "\<ENTER>"
 let g:tagbar_autoshowtag = 1  " Recursively open folds to show selected tag.
 let g:tagbar_map_togglefold = "<Space>"
 let g:tagbar_map_showproto = "o"
+
+" Enable LeetCode support.
+let g:leetcode_browser = 'firefox'
+let g:leetcode_solution_filetype = 'python'
+" Values: 'cpp', 'java', 'python', 'python3', 'csharp', 'javascript', 'ruby', 'swift', 'golang', 'scala', 'kotlin', 'rust'.
+" Default value is 'cpp'.
