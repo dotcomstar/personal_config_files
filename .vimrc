@@ -24,6 +24,8 @@ set softtabstop=4  " Treat space 'tabs' as a single character.
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype make setlocal noexpandtab tabstop=8 shiftwidth=8
 set timeoutlen=1000  " Used for mapping delays (ms).
 set ttimeoutlen=10  " Used for key code delays (ms).
 set showmatch  " Highlight matches [{()}]
@@ -102,7 +104,7 @@ vnoremap ;; <esc>
 nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K.  Y O U  T Y P E D  \"U\". ==== > > "<CR>
 
 " Select all.
-nnoremap A ggVG
+" nnoremap A ggVG
 " TODO: Return to previous line.
 
 " Copy all to clipboard (only works in NeoVim).
