@@ -4,7 +4,7 @@ set cmdheight=2  " Set the height of the command bar at the bottom.
 syntax enable  " Enable syntax processing.
 colorscheme darkblue " darkblue and solarized are nice in my opinion.
 " Enable background opacity in vim.
-highlight Normal guibg=NONE ctermbg=NONE
+highlight Normal ctermfg=LightGray guibg=NONE ctermbg=NONE
 set history=500  " Remember these many lines of history.
 set noerrorbells  " Disable error sounds.
 set number " Show line numbers.
