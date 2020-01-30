@@ -1,5 +1,5 @@
 set ruler  " Always show current cursor location.
-set number  " Show line numbers.
+set number relativenumber  " Display relative line numbers for easier jumping.
 set cmdheight=2  " Set the height of the command bar at the bottom.
 syntax enable  " Enable syntax processing.
 colorscheme darkblue " darkblue and solarized are nice in my opinion.
@@ -7,7 +7,6 @@ colorscheme darkblue " darkblue and solarized are nice in my opinion.
 highlight Normal ctermfg=LightGray guibg=NONE ctermbg=NONE
 set history=500  " Remember these many lines of history.
 set noerrorbells  " Disable error sounds.
-set number " Show line numbers.
 set showcmd  " Show the last entered command in the bottom bar.
 set cursorline  " Highlight the current line.
 set mouse=a  " Enable mouse support.
@@ -26,12 +25,12 @@ autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype make setlocal noexpandtab tabstop=8 shiftwidth=8
+autocmd Filetype ruby setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 set timeoutlen=1000  " Used for mapping delays (ms).
 set ttimeoutlen=10  " Used for key code delays (ms).
 set showmatch  " Highlight matches [{()}]
 set incsearch  " Search as characters are entered.
 set hlsearch  " Highlight matches.
-set number relativenumber  " Display relative line numbers for easier jumping.
 set encoding=UTF-8
 let b:autopairs_loaded=1  " Disable automatic bracket and quote matching by ensuring it never runs.
 set undofile  " Maintain undo history even after exiting a file.
