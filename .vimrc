@@ -13,7 +13,7 @@ set termguicolors  " Allows pum menu opacity and squiggly lines for typos.
 " Editor Quality of Life
 set mouse=a  " Enable mouse support.
 set backspace=indent,eol,start  " Allow the backspace key to delete any whitespace.
-colorscheme darkblue " darkblue and solarized are nice in my opinion.
+colorscheme darkblue  " darkblue and solarized are nice in my opinion.
 " Enable background opacity in vim.
 highlight Normal ctermfg=LightGray guibg=NONE ctermbg=NONE
 set undofile  " Maintain undo history even after exiting a file.
@@ -101,15 +101,10 @@ map <C-e> $
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 
-" Remap 'jk', ';l', ';'', and ';;' to escape in insert mode.
-inoremap jk <esc>
-inoremap ;l <esc>
-inoremap ;' <esc>
+" Remap ';;' to escape.
 map ;; <esc>
 imap ;; <esc>
-
-" Remap ';;' to escape in visual mode.
-vnoremap ;; <esc>
+vmap ;; <esc>
 
 " Catch accidental "U" usage.
 nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K.  Y O U  T Y P E D  \"U\". ==== > > "<CR>
@@ -143,7 +138,7 @@ nmap <C-l> <C-w>l
 "  Open a new window: sp (on top) or vsp (side to side)
 "  Cut line: dd
 "  Paste from Vim clipboard: p
-"  Insert tab character in insert mode: ctrl + v  + tab, or ctrl + q + tab
+"  Insert tab character in insert mode: ctrl + v + tab, or ctrl + q + tab
 "    in windows mode, which is the default. ctrl + i occasionally works, but
 "    is not consistent.
 "  Run one command and then return automatically to insert mode
@@ -188,15 +183,20 @@ let g:netrw_winsize = 23  " Set width of window to 23%.
 let g:netrw_banner = 0  " Disables the banner by default. Toggle with "I".
 let g:netrw_list_hide = &wildignore  " Inherit Vim's wildignores.
 
-" Tagbar config settings.
-let g:tagbar_left = 1
-let g:tagbar_vertical = 5
-let g:tagbar_width = 23
-
 " Automatically close Vim if netrw is the last open buffer.
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' |q|endif
 autocmd WinEnter * if winnr('$') == 2 && getbufvar(winbufnr(winnr()), "&filetype") == "ctags" || &buftype == 'quickfix' |q|endif
 " TODO: Implement for tagbar as well.
+
+
+
+
+" =============<= PLUGIN CONFIG =>=============
+
+" Tagbar config settings.
+let g:tagbar_left = 1
+let g:tagbar_vertical = 5
+let g:tagbar_width = 23
 
 " Tagbar config settings.
 let g:tagbar_singleclick = 1  " Jump to tag with single click. Default is double click.
@@ -248,7 +248,7 @@ Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim'
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-commentary'  " Enable commenting out lines with gcc
+Plug 'tpope/vim-commentary'  " Enable commenting out lines with gcc.
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 "Plug 'ntpeters/vim-better-whitespace'
@@ -300,6 +300,7 @@ set tags=./tags,tags;$HOME
 
 
 " Tabular configurations for common auto-alignment commands.
+" TODO: Make into a function to accept any input literal.
 nnoremap <leader>a=  :Tabularize /=<CR>
 vnoremap <leader>a=  :Tabularize /=<CR>
 nnoremap <leader>A=  :Tabularize /=\zs<CR>
@@ -347,7 +348,6 @@ inoremap <expr> <ENTER> pumvisible() ? "\<C-y>" : "\<ENTER>"
 
 " Use pum for vim commands as well.
 set wildoptions+=pum
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 cnoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
 cnoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 cnoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
