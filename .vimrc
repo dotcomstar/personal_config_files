@@ -1,19 +1,40 @@
-set ruler  " Always show current cursor location.
-set number relativenumber  " Display relative line numbers for easier jumping.
-set cmdheight=2  " Set the height of the command bar at the bottom.
-syntax enable  " Enable syntax processing.
+" Pure Business
+set encoding=UTF-8
+set noerrorbells  " Disable error sounds.
+set novisualbell  " Disable visual errors.
+set history=500  " Remember these many lines of history.
+set undolevels=10000
+set lazyredraw  " Speed up macros by telling Vim to only redraw the screen when necessary.
+set timeoutlen=1000  " Used for mapping delays (ms).
+set ttimeoutlen=10  " Used for key code delays (ms).
+set maxmempattern=10000
+set termguicolors  " Allows pum menu opacity and squiggly lines for typos.
+
+" Editor Quality of Life
+set mouse=a  " Enable mouse support.
+set backspace=indent,eol,start  " Allow the backspace key to delete any whitespace.
 colorscheme darkblue " darkblue and solarized are nice in my opinion.
 " Enable background opacity in vim.
 highlight Normal ctermfg=LightGray guibg=NONE ctermbg=NONE
-set history=500  " Remember these many lines of history.
-set noerrorbells  " Disable error sounds.
-set showcmd  " Show the last entered command in the bottom bar.
-set cursorline  " Highlight the current line.
-set mouse=a  " Enable mouse support.
-set wildmenu  " Allow for visual autocomplete of command menu.
-set lazyredraw  " Speed up macros by telling vim to only redraw the screen when necessary.
+set undofile  " Maintain undo history even after exiting a file.
+" Reopen vim to the last position.
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+syntax enable  " Enable syntax processing.
+set title  " Let Vim set the terminal title.
+set ruler  " Always show current cursor coordinates at the bottom right.
+set number relativenumber  " Display relative line numbers for easier jumping.
+set spell! spelllang=en_us  " Enable spell-check by default.
+
+" Normal Mode Quality of Life
 set list
-set listchars=tab:\|·  " Display tab characters with a vertical line and dots.
+set listchars=tab:\|·  " Display tab characters as a vertical line and dots.
+set cursorline  " Underline the current line.
+set wildmenu  " Allow for visual autocomplete of command menu.
+set cmdheight=2  " Set the height of the command bar at the bottom.
+set showcmd  " Show the last entered command in the bottom bar.
+let g:mapleader="\<Space>"
+
+" Tab Settings
 filetype off  " Reset filetype indentation first...
 filetype indent on  " Enable filetype-specific indentation preferences.
 set expandtab  " Convert tabs to spaces.
@@ -26,21 +47,15 @@ autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype make setlocal noexpandtab tabstop=8 shiftwidth=8
 autocmd Filetype ruby setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
-set timeoutlen=1000  " Used for mapping delays (ms).
-set ttimeoutlen=10  " Used for key code delays (ms).
+
+" Search-related commands
 set showmatch  " Highlight matches [{()}]
 set incsearch  " Search as characters are entered.
 set hlsearch  " Highlight matches.
-set encoding=UTF-8
 let b:autopairs_loaded=1  " Disable automatic bracket and quote matching by ensuring it never runs.
-set undofile  " Maintain undo history even after exiting a file.
-set backspace=indent,eol,start  " Allow the backspace key to delete any whitespace.
+" Turn off search highlight by pressing space.
+nnoremap <leader><space> :nohlsearch<CR>
 
-" Reopen vim to the last position.
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-" The leader is a space character.
-let mapleader=" "
 
 " Toggle relativenumber.
 nnoremap <leader>n : set invrelativenumber<CR>
@@ -52,9 +67,6 @@ augroup smartnumbertoggle
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-" Turn off search highlight by pressing space.
-nnoremap <leader><space> :nohlsearch<CR>
-
 " Search ignoring case, unless the parameter is uppercase.
 set ignorecase
 set smartcase
@@ -64,7 +76,7 @@ set smartcase
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" Toggle spell-check.
+" Toggle spell-check with F6.
 map <F6> :setlocal spell! spelllang=en_us<CR>
 imap <F6> <C-o>:setlocal spell! spelllang=en_us<CR>
 vmap <F6> :<C-u>setlocal spell! spelllang=en_us
@@ -159,6 +171,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Draw a vertical border at 80 columns
 if exists('+colorcolumn')
   set colorcolumn=80
+  highlight colorcolumn ctermbg=DarkGray guibg=#606060
 else
   highlight OverLength ctermbg=red ctermfg=white guibg=#592929
   2match OverLength /\%81v.\+/
@@ -309,6 +322,11 @@ nnoremap <leader>A\| :Tabularize /\|\zs<CR>
 vnoremap <leader>A\| :Tabularize /\|\zs<CR>
 
 
+" Set pum to be transparent. termguicolors must be enabled for it to look
+" nice.
+set pumblend=15
+highlight PmenuSel blend=0
+
 " Use <tab> for trigger completion and navigate to the next complete item.
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -326,6 +344,14 @@ inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <ENTER> pumvisible() ? "\<C-y>" : "\<ENTER>"
+
+" Use pum for vim commands as well.
+set wildoptions+=pum
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+cnoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
+cnoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+cnoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
+" cnoremap <expr> <ENTER> pumvisible() ? "\<C-y>" : "\<ENTER>"
 
 " Tagbar Options:
 let g:tagbar_autoshowtag = 1  " Recursively open folds to show selected tag.
