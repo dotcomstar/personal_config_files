@@ -13,7 +13,9 @@ set termguicolors  " Allows pum menu opacity and squiggly lines for typos.
 " Editor Quality of Life
 set mouse=a  " Enable mouse support.
 set backspace=indent,eol,start  " Allow the backspace key to delete any whitespace.
-colorscheme darkblue  " darkblue and solarized are nice in my opinion.
+colorscheme darkblue  " darkblue and molokai are nice in my opinion.
+autocmd VimEnter * silent! colorscheme molokai  " Set colorcheme to molokai if it exists.
+
 " Enable background opacity in vim.
 highlight Normal ctermfg=LightGray guibg=NONE ctermbg=NONE
 set undofile  " Maintain undo history even after exiting a file.
@@ -23,7 +25,7 @@ syntax enable  " Enable syntax processing.
 set title  " Let Vim set the terminal title.
 set ruler  " Always show current cursor coordinates at the bottom right.
 set number relativenumber  " Display relative line numbers for easier jumping.
-set spell! spelllang=en_us  " Enable spell-check by default.
+if has("spell") | set spell! spelllang=en_us | endif " Enable spell-check by default.
 
 " Normal Mode Quality of Life
 set list
@@ -77,10 +79,11 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Toggle spell-check with F6.
-map <F6> :setlocal spell! spelllang=en_us<CR>
-imap <F6> <C-o>:setlocal spell! spelllang=en_us<CR>
-vmap <F6> :<C-u>setlocal spell! spelllang=en_us
-" TODO: Figure out how to enable from visual mode.
+if has("spell")
+    map <F6> :setlocal spell! spelllang=en_us<CR>
+    imap <F6> <C-o>:setlocal spell! spelllang=en_us<CR>
+    vmap <F6> :<C-u>setlocal spell! spelllang=en_us<CR>
+endif
 
 " Toggle the ability to keep the cursor in the middle of the screen.
 set scrolloff=999  " Enabled by default.
@@ -225,6 +228,7 @@ call plug#begin('~/.vim/plugged')
 
 " Aesthetics
 Plug 'bling/vim-airline'  " Include color box at the bottom.
+Plug 'vim-airline/vim-airline-themes'  " Check out screenshots at https://github.com/vim-airline/vim-airline/wiki/Screenshots.
 Plug 'flazz/vim-colorschemes'  " Add more colorscheme options.
 
 " Autocomplete
@@ -248,12 +252,13 @@ Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim'
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-commentary'  " Enable commenting out lines with gcc.
+Plug 'tpope/vim-commentary'  " Enable commenting out lines with `gcc`.
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 "Plug 'ntpeters/vim-better-whitespace'
 Plug 'mhinz/vim-startify'
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}  " Only run for Markdown files.
+"Plug 'TaskList.vim'  " TODO Checker.
 
 " Syntax
 Plug 'liuchengxu/graphviz.vim'
@@ -277,6 +282,14 @@ let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
 set tags=./tags,tags;$HOME
+
+" Note: Cannot get this to function properly. TODO: Test more extensively.
+function! PlugLoaded(name)
+    return (
+        \ has_key(g:plugs, a:name) &&
+        \ isdirectory(g:plugs[a:name].dir) &&
+        \ stridx(&rtp, g:plugs[a:name].dir) >= 0)
+endfunction
 
 "Uncomment to override instant_markdown defaults:
 "let g:instant_markdown_slow = 1
