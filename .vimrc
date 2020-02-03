@@ -14,7 +14,7 @@ set termguicolors  " Allows pum menu opacity and squiggly lines for typos.
 set mouse=a  " Enable mouse support.
 set backspace=indent,eol,start  " Allow the backspace key to delete any whitespace.
 colorscheme darkblue  " darkblue and molokai are nice in my opinion.
-autocmd VimEnter * silent! colorscheme molokai  " Set colorcheme to molokai if it exists.
+autocmd VimEnter * silent! colorscheme molokai  " Set colorscheme to molokai if it exists.
 
 " Enable background opacity in vim.
 highlight Normal ctermfg=LightGray guibg=NONE ctermbg=NONE
@@ -207,7 +207,7 @@ let g:tagbar_singleclick = 1  " Jump to tag with single click. Default is double
 " TODO: Remap <ENTER> to open and close folders like '+' and '-' do currently.
 
 
-" From https://www.notion.so/NeoVim-Configuration-6611b6768eca4fc38da311f7e86572aa
+" Many settings stem from https://www.notion.so/NeoVim-Configuration-6611b6768eca4fc38da311f7e86572aa
 
 " Open File Explorer
 nnoremap <C-n> :Lexplore<C-m>
@@ -222,6 +222,9 @@ augroup LaunchIDEModeOnStartup
     autocmd VimEnter * wincmd =  " Ensure the windows are all evenly sized
     autocmd VimEnter * wincmd p  " Jump to the previous (main) window.
 augroup END
+
+" Set the Airline colorscheme.
+autocmd VimEnter * silent! AirlineTheme jet " Set airline theme to jet if it exists.
 
 " Vim Plug Plugins
 call plug#begin('~/.vim/plugged')
