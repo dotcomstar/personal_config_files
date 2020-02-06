@@ -64,10 +64,10 @@ set incsearch  " Search as characters are entered.
 set hlsearch  " Highlight matches.
 let b:autopairs_loaded=1  " Disable automatic bracket and quote matching by ensuring it never runs.
 " Turn off search highlight by pressing space.
-nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <Leader><Space> :nohlsearch<CR>:let @/=""<CR>
 
 " Toggle relativenumber.
-nnoremap <leader>n : set invrelativenumber<CR>
+nnoremap <Leader>n : set invrelativenumber<CR>
 
 " Only use relativenumber in the current buffer.
 augroup smartnumbertoggle
@@ -364,7 +364,7 @@ endfunction
 " autocmd VimEnter * wincmd p
 "
 " " Find the current file in NERDTree.
-" map <leader>f :NERDTreeFind<cr>
+" map <Leader>f :NERDTreeFind<cr>
 "
 " " Automatically close Vim if NERDTree is the last open buffer.
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -375,26 +375,26 @@ set foldmethod=syntax  " Add code folding based on syntax.
 
 " Tabular configurations for common auto-alignment commands.
 " TODO: Make into a function to accept any input literal.
-nnoremap <leader>a=  :Tabularize /=<CR>
-vnoremap <leader>a=  :Tabularize /=<CR>
-nnoremap <leader>A=  :Tabularize /=\zs<CR>
-vnoremap <leader>A=  :Tabularize /=\zs<CR>
-nnoremap <leader>a:  :Tabularize /:<CR>
-vnoremap <leader>a:  :Tabularize /:<CR>
-nnoremap <leader>A:  :Tabularize /:\zs<CR>
-vnoremap <leader>A:  :Tabularize /:\zs<CR>
-nnoremap <leader>a#  :Tabularize /#<CR>
-vnoremap <leader>a#  :Tabularize /#<CR>
-nnoremap <leader>A#  :Tabularize /#\zs<CR>
-vnoremap <leader>A#  :Tabularize /#\zs<CR>
-nnoremap <leader>a/  :Tabularize /\/\/<CR>
-vnoremap <leader>a/  :Tabularize /\/\/<CR>
-nnoremap <leader>A/  :Tabularize /\/\/\zs<CR>
-vnoremap <leader>A/  :Tabularize /\/\/\zs<CR>
-nnoremap <leader>a\| :Tabularize /\|<CR>
-vnoremap <leader>a\| :Tabularize /\|<CR>
-nnoremap <leader>A\| :Tabularize /\|\zs<CR>
-vnoremap <leader>A\| :Tabularize /\|\zs<CR>
+nnoremap <Leader>a=  :Tabularize /=<CR>
+vnoremap <Leader>a=  :Tabularize /=<CR>
+nnoremap <Leader>A=  :Tabularize /=\zs<CR>
+vnoremap <Leader>A=  :Tabularize /=\zs<CR>
+nnoremap <Leader>a:  :Tabularize /:<CR>
+vnoremap <Leader>a:  :Tabularize /:<CR>
+nnoremap <Leader>A:  :Tabularize /:\zs<CR>
+vnoremap <Leader>A:  :Tabularize /:\zs<CR>
+nnoremap <Leader>a#  :Tabularize /#<CR>
+vnoremap <Leader>a#  :Tabularize /#<CR>
+nnoremap <Leader>A#  :Tabularize /#\zs<CR>
+vnoremap <Leader>A#  :Tabularize /#\zs<CR>
+nnoremap <Leader>a/  :Tabularize /\/\/<CR>
+vnoremap <Leader>a/  :Tabularize /\/\/<CR>
+nnoremap <Leader>A/  :Tabularize /\/\/\zs<CR>
+vnoremap <Leader>A/  :Tabularize /\/\/\zs<CR>
+nnoremap <Leader>a\| :Tabularize /\|<CR>
+vnoremap <Leader>a\| :Tabularize /\|<CR>
+nnoremap <Leader>A\| :Tabularize /\|\zs<CR>
+vnoremap <Leader>A\| :Tabularize /\|\zs<CR>
 
 
 " Set pum to be transparent. termguicolors must be enabled for it to look
