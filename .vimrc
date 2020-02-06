@@ -266,8 +266,8 @@ nnoremap <C-Space> :call ToggleTerminalAtBottom()<CR>
 
 " Launch IDE Mode on Vim startup.
 augroup LaunchIDEModeOnStartup
-    " TODO: Make this only run on valid file types.
-    autocmd VimEnter * :call OpenIDEMode()<CR>
+    autocmd VimEnter *.md if !exists('g:started_by_firenvim') | Lexplore | wincmd p | endif
+    autocmd VimEnter *.py,*.c,*.go,*.rb,*.java,*.js,*.cpp,*.h,*.hpp,*.vim if !exists('g:started_by_firenvim') | call OpenIDEMode() | endif
     " autocmd VimEnter * nested :call tagbar#autoopen(1)  " Only open for supported filetypes.
 augroup END
 
@@ -438,15 +438,15 @@ let g:leetcode_solution_filetype = 'python'
 " Values: 'cpp', 'java', 'python', 'python3', 'csharp', 'javascript', 'ruby', 'swift', 'golang', 'scala', 'kotlin', 'rust'.
 " Default value is 'cpp'.
 
-" firenvim editor settings
-if exists('g:started_by_firenvim') && g:started_by_firenvim
-    let fc = g:firenvim_config['localSettings']
-    " general options
-    set laststatus=0 noshowcmd
-    set cmdheight=2  " Set the height of the command bar at the bottom.
-    nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
-    nnoremap <C-z> :call firenvim#hide_frame()<CR>
-endif
+" " firenvim editor settings
+" if exists('g:started_by_firenvim') && g:started_by_firenvim
+"     let fc = g:firenvim_config['localSettings']
+"     " general options
+"     set laststatus=0 noshowcmd
+"     set cmdheight=2  " Set the height of the command bar at the bottom.
+"     nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
+"     nnoremap <C-z> :call firenvim#hide_frame()<CR>
+" endif
 
 " firenvim browser extension settings
 let g:firenvim_config = {
