@@ -227,9 +227,8 @@ tmap <C-w> <Esc><C-w>
 " Open File Explorer
 nnoremap <C-n> :Lexplore<C-m>
 
-let g:is_terminal_open = 0  " Off by default.
-
 " Toggle the built-in NeoVim terminal
+let g:is_terminal_open = 0  " Off by default.
 function! ToggleTerminalAtBottom()
     if g:is_terminal_open == 0
         wincmd n  " Open a new buffer.
@@ -239,10 +238,10 @@ function! ToggleTerminalAtBottom()
         let g:is_terminal_open = 1
     else  " The terminal is already on.
         " TODO: Figure out how to properly close the terminal.
-        " WARNING: This is a super janky implementation that closes the bottom
+         " WARNING: This is a super janky implementation that closes the bottom
         " buffer, regardless of what it is.
-        wincmd w
-        bd!
+        wincmd j
+        close
         let g:is_terminal_open = 0
     endif
 endfunction
