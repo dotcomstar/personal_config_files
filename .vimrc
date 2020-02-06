@@ -50,6 +50,14 @@ autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype make setlocal noexpandtab tabstop=8 shiftwidth=8
 autocmd Filetype ruby setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
+" Set backup files
+" Note: the "//" at the end of each directory means that file names will be
+" built from the complete path to the file with all path separators
+" substituted to percent "%" sign. This will ensure file name uniqueness in
+" the preserve directory.
+set undodir=~/.vim/.undo//
+set directory=~/.vim/.swp//
+
 " Search-related commands
 set showmatch  " Highlight matches [{()}]
 set incsearch  " Search as characters are entered.
@@ -57,7 +65,6 @@ set hlsearch  " Highlight matches.
 let b:autopairs_loaded=1  " Disable automatic bracket and quote matching by ensuring it never runs.
 " Turn off search highlight by pressing space.
 nnoremap <leader><space> :nohlsearch<CR>
-
 
 " Toggle relativenumber.
 nnoremap <leader>n : set invrelativenumber<CR>
@@ -206,21 +213,51 @@ let g:tagbar_singleclick = 1  " Jump to tag with single click. Default is double
 " TODO: Allow dynamic resizing of tagbar window on startup.
 " TODO: Remap <ENTER> to open and close folders like '+' and '-' do currently.
 
-
 " Many settings stem from https://www.notion.so/NeoVim-Configuration-6611b6768eca4fc38da311f7e86572aa
 
 " Open File Explorer
 nnoremap <C-n> :Lexplore<C-m>
 
+let g:is_terminal_open = 0  " Off by default.
+
+" Toggle the built-in NeoVim terminal
+function! ToggleTerminalAtBottom()
+    if g:is_terminal_open == 0
+        wincmd n  " Open a new buffer.
+        terminal
+        wincmd J  " Move the terminal to the very bottom.
+        exec 'resize '. string(&lines * 0.13)
+        let g:is_terminal_open = 1
+    else  " The terminal is already on.
+        " TODO: Figure out how to properly close the terminal.
+        " WARNING: This is a super janky implementation that closes the bottom
+        " buffer, regardless of what it is.
+        wincmd w
+        bd!
+        let g:is_terminal_open = 0
+    endif
+endfunction
+
 " IDE Mode
-nnoremap <Tab> :Lexplore<C-m>:TagbarToggle<C-m>:wincmd =<C-m>:wincmd p<C-m>
+function! OpenIDEMode()
+    Lexplore  " Open the file explorer.
+    TagbarToggle  " Open the tag bar.
+    wincmd =  " Resize the buffers to equal size.
+    wincmd p  " Return back to the previous buffer.
+    call ToggleTerminalAtBottom()
+    wincmd p  " Return back to the previous buffer.
+endfunction
+
+" Map Tab to open IDE Mode.
+nnoremap <Tab> :call OpenIDEMode()<CR>
+
+" Map Ctrl+` to open the terminal, similar to VSCode.
+nnoremap <C-Space> :call ToggleTerminalAtBottom()<CR>
 
 " Launch IDE Mode on Vim startup.
 augroup LaunchIDEModeOnStartup
-    autocmd VimEnter * :Lexplore
-    autocmd VimEnter * nested :call tagbar#autoopen(1)  " Only open for supported filetypes.
-    autocmd VimEnter * wincmd =  " Ensure the windows are all evenly sized
-    autocmd VimEnter * wincmd p  " Jump to the previous (main) window.
+    autocmd VimEnter * :call OpenIDEMode()<CR>
+    " autocmd VimEnter * nested :call tagbar#autoopen(1)  " Only open for supported filetypes.
 augroup END
 
 " Set the Airline colorscheme.
@@ -230,9 +267,12 @@ autocmd VimEnter * silent! AirlineTheme jet " Set airline theme to jet if it exi
 call plug#begin('~/.vim/plugged')
 
 " Aesthetics
-Plug 'bling/vim-airline'  " Include color box at the bottom.
-Plug 'vim-airline/vim-airline-themes'  " Check out screenshots at https://github.com/vim-airline/vim-airline/wiki/Screenshots.
 Plug 'flazz/vim-colorschemes'  " Add more colorscheme options.
+" Disable vim-airline when firenvim starts since vim-airline takes two lines.
+if !exists('g:started_by_firenvim')
+    Plug 'bling/vim-airline'  " Include color box at the bottom.
+    Plug 'vim-airline/vim-airline-themes'  " Check out screenshots at https://github.com/vim-airline/vim-airline/wiki/Screenshots.
+endif
 
 " Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -275,6 +315,10 @@ Plug 'rhysd/vim-crystal'
 
 " External Support
 Plug 'ianding1/leetcode.vim'
+" For Linux and Windows
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" For MacOS (from shell command line)
+" nvim --headless -c "call firenvim#install(0, 'export PATH=\"$PATH\"')" -c quit
 
 call plug#end()
 
@@ -379,3 +423,29 @@ let g:leetcode_browser = 'firefox'
 let g:leetcode_solution_filetype = 'python'
 " Values: 'cpp', 'java', 'python', 'python3', 'csharp', 'javascript', 'ruby', 'swift', 'golang', 'scala', 'kotlin', 'rust'.
 " Default value is 'cpp'.
+
+" firenvim editor settings
+if exists('g:started_by_firenvim') && g:started_by_firenvim
+    let fc = g:firenvim_config['localSettings']
+    " general options
+    set laststatus=0 noshowcmd
+    set cmdheight=2  " Set the height of the command bar at the bottom.
+    nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
+    nnoremap <C-z> :call firenvim#hide_frame()<CR>
+endif
+
+" firenvim browser extension settings
+let g:firenvim_config = {
+    \ 'globalSettings': {
+        \ 'alt': 'all',
+    \  },
+    \ 'localSettings': {
+        \ '.*': {
+            \ 'cmdline': 'neovim',
+            \ 'priority': 0,
+            \ 'selector': 'textarea',
+            \ 'takeover': 'once',
+        \ },
+    \ }
+\ }
+
