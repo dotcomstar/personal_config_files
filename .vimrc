@@ -141,6 +141,9 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
+" Remap for easier tab movement.
+nnoremap <C-t> :tabedit %<CR>
+nnoremap <Leader>t :tabclose<CR>
 
 " Also helpful commands to note:
 "  Go to the first line of a file: gg
@@ -182,7 +185,6 @@ else
   2match OverLength /\%81v.\+/
 endif
 
-
 " netrw config settings.
 
 " Make netrw file explorer act like NERDTree.
@@ -200,6 +202,8 @@ autocmd WinEnter * if winnr('$') == 2 && getbufvar(winbufnr(winnr()), "&filetype
 
 
 
+" ============== THE END OF SUPPORT FOR VANILLA VIM ==================
+
 
 " =============<= PLUGIN CONFIG =>=============
 
@@ -214,6 +218,11 @@ let g:tagbar_singleclick = 1  " Jump to tag with single click. Default is double
 " TODO: Remap <ENTER> to open and close folders like '+' and '-' do currently.
 
 " Many settings stem from https://www.notion.so/NeoVim-Configuration-6611b6768eca4fc38da311f7e86572aa
+
+" Set more intuitive mappings for the terminal.
+tnoremap <Esc> <C-\><C-n>
+tmap ;; <Esc>
+tmap <C-w> <Esc><C-w>
 
 " Open File Explorer
 nnoremap <C-n> :Lexplore<C-m>
@@ -256,6 +265,7 @@ nnoremap <C-Space> :call ToggleTerminalAtBottom()<CR>
 
 " Launch IDE Mode on Vim startup.
 augroup LaunchIDEModeOnStartup
+    " TODO: Make this only run on valid file types.
     autocmd VimEnter * :call OpenIDEMode()<CR>
     " autocmd VimEnter * nested :call tagbar#autoopen(1)  " Only open for supported filetypes.
 augroup END
