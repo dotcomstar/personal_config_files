@@ -238,7 +238,7 @@ function! ToggleTerminalAtBottom()
         let g:is_terminal_open = 1
     else  " The terminal is already on.
         " TODO: Figure out how to properly close the terminal.
-         " WARNING: This is a super janky implementation that closes the bottom
+        " WARNING: This is a super janky implementation that closes the bottom
         " buffer, regardless of what it is.
         wincmd j
         close
@@ -250,6 +250,7 @@ endfunction
 function! OpenIDEMode()
     Lexplore  " Open the file explorer.
     TagbarToggle  " Open the tag bar.
+    wincmd r  " Put the tagbar below the file explorer.
     wincmd =  " Resize the buffers to equal size.
     wincmd p  " Return back to the previous buffer.
     call ToggleTerminalAtBottom()
@@ -453,7 +454,7 @@ let g:firenvim_config = {
             \ 'cmdline': 'neovim',
             \ 'priority': 0,
             \ 'selector': 'textarea',
-            \ 'takeover': 'once',
+            \ 'takeover': 'always',
         \ },
     \ }
 \ }
