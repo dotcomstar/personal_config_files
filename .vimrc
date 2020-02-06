@@ -198,7 +198,8 @@ let g:netrw_list_hide = &wildignore  " Inherit Vim's wildignores.
 " Automatically close Vim if netrw is the last open buffer.
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' |q|endif
 autocmd WinEnter * if winnr('$') == 2 && getbufvar(winbufnr(winnr()), "&filetype") == "ctags" || &buftype == 'quickfix' |q|endif
-" TODO: Implement for tagbar as well.
+" autocmd BufLeave * call ToggleTerminalAtBottom()
+" TODO: Implement for tagbar and terminal.
 
 
 
@@ -368,6 +369,9 @@ endfunction
 " " Automatically close Vim if NERDTree is the last open buffer.
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Add code folding.
+set nofoldenable  " Ensure files are opened unfolded.
+set foldmethod=syntax  " Add code folding based on syntax.
 
 " Tabular configurations for common auto-alignment commands.
 " TODO: Make into a function to accept any input literal.
