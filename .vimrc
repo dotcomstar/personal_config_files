@@ -439,6 +439,9 @@ let g:leetcode_solution_filetype = 'python'
 " Default value is 'cpp'.
 
 " " firenvim editor settings
+" " TODO: Debug this.
+" " TODO: Set GitHub.com to markdown by default, but don't run
+" " MarkdownPreview.
 " if exists('g:started_by_firenvim') && g:started_by_firenvim
 "     let fc = g:firenvim_config['localSettings']
 "     " general options
