@@ -116,10 +116,29 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Note: You can use Ctrl+l to pseudo-clear the screen.
+
 # Some more aliases to avoid making mistakes:
- alias rm='rm -i'
- alias cp='cp -i'
- alias mv='mv -i'
+alias rm='rm -iv'
+alias cp='cp -iv'
+alias mv='mv -iv'
+
+# Remap NeoVim to `vim` for ease of use. Vanilla Vim is remapped to `vi`.
+alias vim='/usr/bin/nvim'
+alias vi='/usr/bin/vim'
+
+# Ensure that NeoVim is the default editor across the board.
+export VISUAL=/usr/bin/nvim
+export EDITOR="$VISUAL"
+git config --global core.editor "nvim"
+export PATH="$HOME/.rbenv/bin:$PATH"
+
+# Note: Open images with `xdg-open filename`, which opens the images with the
+# user's preferred application.
+alias open='xdg-open'
+
+# Just having fun.
+alias countryroads='cd ~'
 
 # An alias to enable automatic git GPG-key signing
 export GPG_TTY=$(tty)
