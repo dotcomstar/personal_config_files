@@ -133,7 +133,10 @@ nnoremap <C-z> u
 inoremap <C-z> <C-o>u
 nnoremap <C-y> <C-r>
 inoremap <C-y> <C-o><C-r>
-" TODO: Figure out what else is mapped to Ctrl-y.
+
+" Map Ctrl-s to save for non-vimmers.
+nnoremap <C-s> :w<CR>
+inoremap <C-s> <C-o>:w<CR>
 
 " Remap for easier window movement.
 nmap <C-h> <C-w>h
@@ -465,4 +468,3 @@ let g:firenvim_config = {
         \ },
     \ }
 \ }
-
