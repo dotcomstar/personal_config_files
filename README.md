@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg" />
   <img src="https://img.shields.io/badge/Shell-bash-yellow.svg" />
   <br><br>
-  <img src="https://i.imgur.com/pVGr7tX.png">
+  <img src="https://user-images.githubusercontent.com/32310882/74556364-e0af6300-4f2b-11ea-9997-a66f6c53a859.png" width="500" alt="Personal Logo">
 </p>
 
 This repository includes different Linux/Unix config files that I use for productivity in the terminal and online.
