@@ -1,19 +1,40 @@
-# personal_config_files
+<h1 align="center">Personal Config Files</h1>
+<p align="center">Coding is zen</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg" />
+  <img src="https://img.shields.io/badge/Shell-bash-yellow.svg" />
+  <br><br>
+  <img src="https://i.imgur.com/pVGr7tX.png">
+</p>
 
 This repository includes different Linux/Unix config files that I use for productivity in the terminal and online.
 
-For a vanilla vim configuration, check the branch labelled "Before NVim".
+It includes my `bash`, `[v/nv]im`, `nano`, ... config files.
 
-## Neovim Screenshots
+
+For a vanilla vim configuration, check the branch labelled `Before NVim`.
+
+## Screenshots
+
+### Neovim
 
 ![Nvim_screenshot_normal_mode_2-12-20](https://user-images.githubusercontent.com/32310882/74386317-97440400-4dc3-11ea-96d7-90f77a179a1c.png)
 
 ![Nvim_screenshot_insert_mode_2-12-20](https://user-images.githubusercontent.com/32310882/74386295-9317e680-4dc3-11ea-8ee9-72f19be7e41c.png)
 
-## (Vanilla) Vim Screenshots
+### (Vanilla) Vim
 
 ![Vanilla_Vim_screenshot_2-12-20](https://user-images.githubusercontent.com/32310882/74386602-60bab900-4dc4-11ea-8119-e07f51aeb849.png)
 
-## Nano Screenshots
+### Nano
 
 ![Nano_Screenshot](https://user-images.githubusercontent.com/32310882/73716524-39d5f600-46e5-11ea-9472-89f2b23fc15b.png)
+
+## More screenshots
+<details>
+<summary>Screenshots (as of `Feb 14`)</summary>
+<br>
+Currently under renovation.
+</details>
+
+Inspiration for README taken from https://github.com/meain/dotfiles.
