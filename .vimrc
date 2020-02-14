@@ -436,7 +436,6 @@ vnoremap <Leader>a\| :Tabularize /\|<CR>
 nnoremap <Leader>A\| :Tabularize /\|\zs<CR>
 vnoremap <Leader>A\| :Tabularize /\|\zs<CR>
 
-
 " Set pum to be transparent. termguicolors must be enabled for it to look
 " nice.
 set pumblend=15
