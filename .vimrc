@@ -49,6 +49,8 @@ autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype make setlocal noexpandtab tabstop=8 shiftwidth=8
 autocmd Filetype ruby setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+" autocmd FileType ocaml setlocal
+au BufRead,BufNewFile *.ml,*.mli compiler ocaml
 
 " Set backup files
 " Note: the "//" at the end of each directory means that file names will be
@@ -96,6 +98,16 @@ endif
 set scrolloff=999  " Enabled by default.
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
+" Remap ';;' to escape.
+map ;; <esc>
+imap ;; <esc>
+vmap ;; <esc>
+
+" Remap :;; to ;; for use in Ocaml.
+" Note: If I used three semicolons, then two semicolons would pause to check
+" for the third.
+inoremap :;; ;;
+
 " TODO: Disable scrolloff for mouse-based movements.
 " TODO: Account for random accidental touch-pad clicks, perhaps outside of
 " Vim.
@@ -111,10 +123,20 @@ map <C-e> $
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 
-" Remap ';;' to escape.
-map ;; <esc>
-imap ;; <esc>
-vmap ;; <esc>
+" Easier line navigation
+nnoremap H g^
+nnoremap L g$
+
+" Get back to where you were easily by setting a mark `p` before common jumps.
+" Return to the previous line with 'p or `p.
+nnoremap gg mpgg
+nnoremap G mpG
+nnoremap / mp/
+
+" Easier indentation - does dot loose selection. (From what I understand, it
+" puts you back into visual mode after you indent.)
+vnoremap > >gv
+vnoremap < <gv
 
 " Catch accidental "U" usage.
 nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K.  Y O U  T Y P E D  \"U\". ==== > > "<CR>
@@ -127,6 +149,12 @@ nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K.  Y O U  T Y P E D  \
 if has('nvim')
     nnoremap yA gg"+yG''
 endif
+
+" I am too lazy to take my hands off shift. command! is preferred over
+" cnoremap since you have to hit enter first.
+command! WQ wq
+command! Wq wq
+command! W w
 
 " Remap more common undo and redo buttons for non-vimmers.
 nnoremap <C-z> u
@@ -204,6 +232,15 @@ autocmd WinEnter * if winnr('$') == 2 && getbufvar(winbufnr(winnr()), "&filetype
 " autocmd BufLeave * call ToggleTerminalAtBottom()
 " TODO: Implement for tagbar and terminal.
 
+" Setting up ignores
+set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif,*.jpeg,*.ico,*.pdf
+set wildignore+=*.wav,*.mp4,*.mp3
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
+set wildignore+=*.swp,*~,._*
+set wildignore+=_pycache_,.DS_Store,.vscode,.localized
+set wildignore+=.cache,node_modules,package-lock.json,yarn.lock,dist,.git
 
 
 " ============== THE END OF SUPPORT FOR VANILLA VIM ==================
@@ -270,7 +307,7 @@ nnoremap <C-Space> :call ToggleTerminalAtBottom()<CR>
 " Launch IDE Mode on Vim startup.
 augroup LaunchIDEModeOnStartup
     autocmd VimEnter *.md if !exists('g:started_by_firenvim') | Lexplore | wincmd p | endif
-    autocmd VimEnter *.py,*.c,*.go,*.rb,*.java,*.js,*.cpp,*.h,*.hpp,*.vim if !exists('g:started_by_firenvim') | call OpenIDEMode() | endif
+    autocmd VimEnter *.py,*.c,*.go,*.rb,*.java,*.js,*.cpp,*.h,*.hpp,*.vim,*.ml,*.mli if !exists('g:started_by_firenvim') | call OpenIDEMode() | endif
     " autocmd VimEnter * nested :call tagbar#autoopen(1)  " Only open for supported filetypes.
 augroup END
 
@@ -464,7 +501,40 @@ let g:firenvim_config = {
             \ 'cmdline': 'neovim',
             \ 'priority': 0,
             \ 'selector': 'textarea',
-            \ 'takeover': 'always',
+            \ 'takeover': 'never',
         \ },
     \ }
 \ }
+
+" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+let s:opam_share_dir = system("opam config var share")
+let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+let s:opam_configuration = {}
+
+function! OpamConfOcpIndent()
+  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+endfunction
+let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+function! OpamConfOcpIndex()
+  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+endfunction
+let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+function! OpamConfMerlin()
+  let l:dir = s:opam_share_dir . "/merlin/vim"
+  execute "set rtp+=" . l:dir
+endfunction
+let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+for tool in s:opam_packages
+  " Respect package order (merlin should be after ocp-index)
+  if count(s:opam_available_tools, tool) > 0
+    call s:opam_configuration[tool]()
+  endif
+endfor
+" ## end of OPAM user-setup addition for vim / base ## keep this line
