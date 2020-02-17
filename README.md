@@ -36,7 +36,7 @@ For a vanilla vim configuration, check the branch labelled `Before NVim`.
 <details>
 <summary>Screenshots (as of `Feb 14`)</summary>
 <br>
-Currently under renovation.
+<p><i>Currently under renovation.</i></p>
 </details>
 
 Inspiration for README taken from https://github.com/meain/dotfiles.
