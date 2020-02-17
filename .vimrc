@@ -35,6 +35,7 @@ set wildmenu  " Allow for visual autocomplete of command menu.
 set cmdheight=2  " Set the height of the command bar at the bottom.
 set showcmd  " Show the last entered command in the bottom bar.
 let g:mapleader="\<Space>"
+let g:maplocalleader="\<Space>"
 
 " Tab Settings
 filetype off  " Reset filetype indentation first...
@@ -99,7 +100,6 @@ set scrolloff=999  " Enabled by default.
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
 " Remap ';;' to escape.
-map ;; <esc>
 imap ;; <esc>
 vmap ;; <esc>
 
@@ -107,6 +107,7 @@ vmap ;; <esc>
 " Note: If I used three semicolons, then two semicolons would pause to check
 " for the third.
 inoremap :;; ;;
+tnoremap :;; ;;
 
 " TODO: Disable scrolloff for mouse-based movements.
 " TODO: Account for random accidental touch-pad clicks, perhaps outside of
@@ -118,14 +119,15 @@ noremap <Up> g<Up>
 noremap <Down> g<Down>
 
 " Remap for nano-esque jumps to the beginning/end of a line.
+" Note: Use `0` to go to the first column of a line.
 map <C-a> ^
 map <C-e> $
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 
 " Easier line navigation
-nnoremap H g^
-nnoremap L g$
+nnoremap H ^
+nnoremap L $
 
 " Get back to where you were easily by setting a mark `p` before common jumps.
 " Return to the previous line with 'p or `p.
@@ -174,11 +176,12 @@ nmap <C-l> <C-w>l
 
 " Remap for easier tab movement.
 nnoremap <C-t> :tabedit %<CR>
-nnoremap <Leader>t :tabclose<CR>
+nnoremap <Leader>T :tabclose<CR>
 
 " Also helpful commands to note:
 "  Go to the first line of a file: gg
 "  Go to the last line of a file: G
+"  Go to the fist column of a line: 0
 "  Open a new window: sp (on top) or vsp (side to side)
 "  Cut line: dd
 "  Paste from Vim clipboard: p
@@ -353,6 +356,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}  " Only run for Markdown files.
 "Plug 'TaskList.vim'  " TODO Checker.
+Plug 'daeyun/vim-matlab'
 
 " Syntax
 Plug 'liuchengxu/graphviz.vim'
@@ -537,3 +541,9 @@ for tool in s:opam_packages
   endif
 endfor
 " ## end of OPAM user-setup addition for vim / base ## keep this line
+
+" Merlin Configuration
+" TODO: Only set the LocalLeader to `Space` if in an Ocaml file.
+" autocmd VimEnter *.ml,*.mli let maplocalleader="\<Space>"
+nmap <LocalLeader>r  <Plug>(MerlinRename)
+nmap <LocalLeader>R  <Plug>(MerlinRenameAppend)
