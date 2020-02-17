@@ -3,8 +3,10 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg" />
   <img src="https://img.shields.io/badge/Shell-bash-yellow.svg" />
+  <img src="https://img.shields.io/badge/Browser-Firefox-orange.svg" />
+  <img src="https://img.shields.io/badge/License-mit-lightgray.svg" />
   <br><br>
-  <img src="https://user-images.githubusercontent.com/32310882/74557301-dbebae80-4f2d-11ea-92a7-f59fff31b7bb.png" width="500" alt="Personal Logo">
+  <img src="https://user-images.githubusercontent.com/32310882/74557301-dbebae80-4f2d-11ea-92a7-f59fff31b7bb.png" width="460" alt="Personal Logo">
 </p>
 
 This repository includes different Linux/Unix config files that I use for productivity in the terminal and online.
