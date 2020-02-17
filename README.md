@@ -1,9 +1,10 @@
 <h1 align="center">Personal Config Files</h1>
 <p align="center">Coding is zen</p>
 <p align="center">
-  <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg" />
-  <img src="https://img.shields.io/badge/Shell-bash-yellow.svg" />
-  <img src="https://img.shields.io/badge/Browser-Firefox-orange.svg" />
+  <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg?logo=neovim&?logoWidth=40" />
+  <img src="https://img.shields.io/badge/OS-linux mint-green.svg?logo=linux-mint&?logoWidth=40" />
+  <img src="https://img.shields.io/badge/Shell-bash-yellow.svg?logo=gnu-bash&?logoWidth=40&?logoColor=yellow" />
+  <img src="https://img.shields.io/badge/Browser-Firefox-orange.svg?logo=mozilla-firefox&?logoWidth=40" />
   <img src="https://img.shields.io/badge/License-mit-lightgray.svg" />
   <br><br>
   <img src="https://user-images.githubusercontent.com/32310882/74557301-dbebae80-4f2d-11ea-92a7-f59fff31b7bb.png" width="460" alt="Personal Logo">
