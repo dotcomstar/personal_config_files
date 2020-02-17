@@ -1,8 +1,8 @@
 <h1 align="center">Personal Config Files</h1>
 <p align="center">Coding is zen</p>
 <p align="center">
-  <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg?logo=neovim&?logoWidth=40" />
-  <img src="https://img.shields.io/badge/OS-linux mint-green.svg?logo=linux-mint&?logoWidth=40" />
+  <a href=".vimrc"><img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg?logo=neovim&?logoWidth=40" /></a>
+  <a href="https://linuxmint.com/"><img src="https://img.shields.io/badge/OS-linux mint-green.svg?logo=linux-mint&?logoWidth=40" /></a>
   <img src="https://img.shields.io/badge/Shell-bash-yellow.svg?logo=gnu-bash&?logoWidth=40&?logoColor=yellow" />
   <img src="https://img.shields.io/badge/Browser-Firefox-orange.svg?logo=mozilla-firefox&?logoWidth=40" />
   <img src="https://img.shields.io/badge/License-mit-lightgray.svg" />
