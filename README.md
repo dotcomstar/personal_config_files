@@ -15,8 +15,6 @@ This repository includes different Linux/Unix config files that I use for produc
 It includes my `bash`, `[v/nv]im`, `nano`, ... config files.
 
 
-For a vanilla vim configuration, check the branch labelled `Before NVim`.
-
 ## Screenshots
 
 ### Neovim
