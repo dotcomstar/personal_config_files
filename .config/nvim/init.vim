@@ -357,6 +357,7 @@ Plug 'mhinz/vim-startify'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}  " Only run for Markdown files.
 "Plug 'TaskList.vim'  " TODO Checker.
 Plug 'daeyun/vim-matlab'
+Plug 'bkad/CamelCaseMotion'
 
 " Syntax
 Plug 'liuchengxu/graphviz.vim'
@@ -446,18 +447,32 @@ set pumblend=15
 highlight PmenuSel blend=0
 
 " Use <tab> for trigger completion and navigate to the next complete item.
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
+" TODO: Add jumping on space, but retain enter for confirming selections.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+
+" inoremap <silent><expr> <Tab>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<Tab>" :
+"       \ coc#refresh()
+
 " Enable tab and shift-tab for navigation through autocompletion suggestions.
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
@@ -547,3 +562,26 @@ endfor
 " autocmd VimEnter *.ml,*.mli let maplocalleader="\<Space>"
 nmap <LocalLeader>r  <Plug>(MerlinRename)
 nmap <LocalLeader>R  <Plug>(MerlinRenameAppend)
+
+" CamelCaseMotion
+map <silent> <C-Left> <Plug>CamelCaseMotion_b
+map <silent> <C-Right> <Plug>CamelCaseMotion_w
+imap <silent> <C-Left> <C-o><Plug>CamelCaseMotion_b
+imap <silent> <C-Right> <C-o><Plug>CamelCaseMotion_w
+imap <silent> <S-Left> <C-o><Plug>CamelCaseMotion_b
+imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+map <silent> ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+sunmap ge
+" Note: `ie` seems to function like `iw`, and `iw` like `aw`.
+omap <silent> iw <Plug>CamelCaseMotion_ie
+xmap <silent> iw <Plug>CamelCaseMotion_ie
+omap <silent> aw <Plug>CamelCaseMotion_iw
+xmap <silent> aw <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
