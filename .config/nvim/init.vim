@@ -125,9 +125,11 @@ map <C-e> $
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 
-" Easier line navigation
+" Easier line navigation with capitalized movement commands.
 nnoremap H ^
 nnoremap L $
+noremap <silent> <expr> K (line('.') - search('^\n.\+$', 'Wenb')) . 'kzv^'
+noremap <silent> <expr> J (search('^\n.', 'Wen') - line('.')) . 'jzv^'
 
 " Get back to where you were easily by setting a mark `p` before common jumps.
 " Return to the previous line with 'p or `p.
@@ -581,7 +583,7 @@ sunmap ge
 " Note: `ie` seems to function like `iw`, and `iw` like `aw`.
 omap <silent> iw <Plug>CamelCaseMotion_ie
 xmap <silent> iw <Plug>CamelCaseMotion_ie
-omap <silent> aw <Plug>CamelCaseMotion_iw
-xmap <silent> aw <Plug>CamelCaseMotion_iw
+" omap <silent> aw <Plug>CamelCaseMotion_iw
+" xmap <silent> aw <Plug>CamelCaseMotion_iw
 omap <silent> ib <Plug>CamelCaseMotion_ib
 xmap <silent> ib <Plug>CamelCaseMotion_ib
