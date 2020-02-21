@@ -23,6 +23,9 @@ set undofile  " Maintain undo history even after exiting a file.
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 syntax enable  " Enable syntax processing.
 set title  " Let Vim set the terminal title.
+let &titlestring = '%t%( %m%r%)%( <%{get(g:, "cur_project", "")}>%)' .
+            \ '%( (%{expand("%:~:.:h")})%)' .
+            \ '%( (%{getcwd()})%)%( %a%) - %(%{v:servername}%)'
 set ruler  " Always show current cursor coordinates at the bottom right.
 set number relativenumber  " Display relative line numbers for easier jumping.
 if has("spell") | set spell! spelllang=en_us | endif " Enable spell-check by default.
@@ -359,7 +362,8 @@ Plug 'mhinz/vim-startify'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}  " Only run for Markdown files.
 "Plug 'TaskList.vim'  " TODO Checker.
 Plug 'daeyun/vim-matlab'
-Plug 'bkad/CamelCaseMotion'
+Plug 'bkad/CamelCaseMotion'  " Add CamelCase and snake_case as word objects.
+Plug 'coderifous/textobj-word-column.vim'  " Add vertical columns as a word object with `ic` and `ac`.
 
 " Syntax
 Plug 'liuchengxu/graphviz.vim'
