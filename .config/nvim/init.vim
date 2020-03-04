@@ -106,8 +106,10 @@ nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 " Note: By default, <C-[> also works.
 imap ;; <esc>
 vmap ;; <esc>
-imap jf <esc>
-vmap jf <esc>
+imap jk <esc>
+vmap jk <esc>
+imap kj <esc>
+vmap kj <esc>
 
 " " The first line maps escape to the right shift key when you enter Vim, and the second line returns normal functionality to right shift key when you quit.
 " " This requires Linux with the xorg-xmodmap package installed.
