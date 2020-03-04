@@ -106,11 +106,13 @@ nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 " Note: By default, <C-[> also works.
 imap ;; <esc>
 vmap ;; <esc>
+imap jf <esc>
+vmap jf <esc>
 
-" The first line maps escape to the right shift key when you enter Vim, and the second line returns normal functionality to right shift key when you quit.
-" This requires Linux with the xorg-xmodmap package installed.
-au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x3E = Escape'
-au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x3E = Shift_R'
+" " The first line maps escape to the right shift key when you enter Vim, and the second line returns normal functionality to right shift key when you quit.
+" " This requires Linux with the xorg-xmodmap package installed.
+" au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x3E = Escape'
+" au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x3E = Shift_R'
 
 " Remap :;; to ;; for use in Ocaml.
 " Note: If I used three semicolons, then two semicolons would pause to check
