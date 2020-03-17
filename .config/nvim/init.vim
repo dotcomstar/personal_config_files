@@ -24,8 +24,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 syntax enable  " Enable syntax processing.
 set title  " Let Vim set the terminal title.
 let &titlestring = '%t%( %m%r%)%( <%{get(g:, "cur_project", "")}>%)' .
-            \ '%( (%{expand("%:~:.:h")})%)' .
-            \ '%( (%{getcwd()})%)%( %a%) - %(%{v:servername}%)'
+            \ '%( (%{expand("%:~:.:h")})%)' " .
+           " \ '%( (%{getcwd()})%)%( %a%) - %(%{v:servername}%)'
 set ruler  " Always show current cursor coordinates at the bottom right.
 set number relativenumber  " Display relative line numbers for easier jumping.
 if has("spell") | set spell! spelllang=en_us | endif " Enable spell-check by default.
@@ -326,7 +326,7 @@ nnoremap <C-Space> :call ToggleTerminalAtBottom()<CR>
 " Launch IDE Mode on Vim startup.
 augroup LaunchIDEModeOnStartup
     autocmd VimEnter *.md if !exists('g:started_by_firenvim') | Lexplore | wincmd p | endif
-    autocmd VimEnter *.py,*.c,*.go,*.rb,*.java,*.js,*.cpp,*.h,*.hpp,*.vim,*.ml,*.mli if !exists('g:started_by_firenvim') | call OpenIDEMode() | endif
+    autocmd VimEnter *.py,*.c,*.go,*.rb,*.java,*.js,*.cpp,*.h,*.hpp,*.vim,*.*vimrc,*.ml,*.mli if !exists('g:started_by_firenvim') | call OpenIDEMode() | endif
     " autocmd VimEnter * nested :call tagbar#autoopen(1)  " Only open for supported filetypes.
 augroup END
 
