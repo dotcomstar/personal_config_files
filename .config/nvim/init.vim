@@ -208,6 +208,7 @@ nnoremap <Leader>T :tabclose<CR>
 "  Automatically fix comment length: gw
 "  Jump up 10 lines: 10k
 "  Jump down 10 lines: 10j
+"  Paste in insert mode: Ctrl + r
 "  Access registers: :reg
 "  Copy to clipboard register in nvim: "+y
 "  Check spellcheck suggestions: z=
@@ -284,6 +285,23 @@ tnoremap <Esc> <C-\><C-n>
 tmap ;; <Esc>
 tmap <C-w> <Esc><C-w>
 
+" Add Ctrl-R pasting functionality to the terminal.
+tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+
+augroup terminal_auto_insert
+    autocmd BufWinEnter,WinEnter term://* startinsert
+    autocmd BufLeave term://* stopinsert
+
+    " Automatically close a terminal that exited with status 0.
+    " Ignore various filetypes as those will close terminal automatically
+    " Ignore fzf, ranger, coc
+    " TODO: Automatically re-enter the main window instead of the top-left.
+    autocmd TermClose term://*
+          \ if (expand('<afile>') !~ "fzf") && (expand('<afile>') !~ "ranger") && (expand('<afile>') !~ "coc") |
+          \   call nvim_input('<CR>')  |
+          \ endif
+augroup end
+
 " Open File Explorer
 nnoremap <C-n> :Lexplore<C-m>
 
@@ -329,6 +347,10 @@ augroup LaunchIDEModeOnStartup
     autocmd VimEnter *.py,*.c,*.go,*.rb,*.java,*.js,*.cpp,*.h,*.hpp,*.vim,*.*vimrc,*.ml,*.mli if !exists('g:started_by_firenvim') | call OpenIDEMode() | endif
     " autocmd VimEnter * nested :call tagbar#autoopen(1)  " Only open for supported filetypes.
 augroup END
+
+augroup CloseIDEMode
+    autocmd QuitPre call ToggleTerminalAtBottom()
+augroup end
 
 " Set the Airline colorscheme.
 autocmd VimEnter * silent! AirlineTheme jet " Set airline theme to jet if it exists.
