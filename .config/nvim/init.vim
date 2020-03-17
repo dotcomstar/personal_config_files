@@ -77,9 +77,8 @@ nnoremap <Leader>n : set invrelativenumber<CR>
 
 " Only use relativenumber in the current buffer.
 augroup smartnumbertoggle
-    autocmd!
     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+    autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 augroup END
 
 " Search ignoring case, unless the parameter is uppercase.
@@ -288,7 +287,9 @@ tmap <C-w> <Esc><C-w>
 " Add Ctrl-R pasting functionality to the terminal.
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 
-augroup terminal_auto_insert
+augroup terminal_autocommands
+
+    " Automatically enter insert mode in the terminal.
     autocmd BufWinEnter,WinEnter term://* startinsert
     autocmd BufLeave term://* stopinsert
 
@@ -300,6 +301,32 @@ augroup terminal_auto_insert
           \ if (expand('<afile>') !~ "fzf") && (expand('<afile>') !~ "ranger") && (expand('<afile>') !~ "coc") |
           \   call nvim_input('<CR>')  |
           \ endif
+
+    " TODO: Add functionality to seek by terminal prompts.
+    " " Search for the shell prompt
+    " function! GoToPrompt(flags) abort
+    "     " Regexp representing my shell prompt
+    "     let l:shell_prompt = 'jet@jet-Laptop:'
+    "     call search(shell_prompt, a:flags)
+    " endfunction
+
+    " " Jump to the previous shell prompt
+    " autocmd TermOpen * noremap <buffer> <silent> [g
+    "             \ :call GoToPrompt('eb')<cr>
+    " " Jump to the next shell prompt
+    " autocmd TermOpen * noremap <buffer> <silent> ]g
+    "             \ :call GoToPrompt('e')<cr>
+
+    " " Jump to the uppermost shell prompt
+    " autocmd TermOpen * nmap <buffer> [G 1G]g
+    " " Jump to the 2nd bottommost shell prompt (since you can just use `G` to
+    " " go to the 1st bottommost shell prompt)
+    " autocmd TermOpen * nmap <buffer> ]G G[g
+
+    " " Doesn't work in visual mode, so unmap it for visual mode
+    " autocmd TermOpen * vunmap <buffer> [g
+    " autocmd TermOpen * vunmap <buffer> ]g
+
 augroup end
 
 " Open File Explorer
