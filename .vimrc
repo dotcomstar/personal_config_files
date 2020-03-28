@@ -23,6 +23,9 @@ set undofile  " Maintain undo history even after exiting a file.
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 syntax enable  " Enable syntax processing.
 set title  " Let Vim set the terminal title.
+let &titlestring = '%t%( %m%r%)%( <%{get(g:, "cur_project", "")}>%)' .
+            \ '%( (%{expand("%:~:.:h")})%)' " .
+           " \ '%( (%{getcwd()})%)%( %a%) - %(%{v:servername}%)'
 set ruler  " Always show current cursor coordinates at the bottom right.
 set number relativenumber  " Display relative line numbers for easier jumping.
 if has("spell") | set spell! spelllang=en_us | endif " Enable spell-check by default.
@@ -74,9 +77,8 @@ nnoremap <Leader>n : set invrelativenumber<CR>
 
 " Only use relativenumber in the current buffer.
 augroup smartnumbertoggle
-    autocmd!
     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+    autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 augroup END
 
 " Search ignoring case, unless the parameter is uppercase.
@@ -100,12 +102,23 @@ set scrolloff=999  " Enabled by default.
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
 " Remap ';;' to escape.
+" Note: By default, <C-[> also works.
 imap ;; <esc>
 vmap ;; <esc>
+imap jk <esc>
+vmap jk <esc>
+imap kj <esc>
+vmap kj <esc>
+
+" " The first line maps escape to the right shift key when you enter Vim, and the second line returns normal functionality to right shift key when you quit.
+" " This requires Linux with the xorg-xmodmap package installed.
+" au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x3E = Escape'
+" au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x3E = Shift_R'
 
 " Remap :;; to ;; for use in Ocaml.
 " Note: If I used three semicolons, then two semicolons would pause to check
 " for the third.
+" Note: A literal ;; can also be accomplished with ;<C-v>;
 inoremap :;; ;;
 tnoremap :;; ;;
 
@@ -125,9 +138,11 @@ map <C-e> $
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 
-" Easier line navigation
+" Easier line navigation with capitalized movement commands.
 nnoremap H ^
 nnoremap L $
+noremap <silent> <expr> K (line('.') - search('^\n.\+$', 'Wenb')) . 'kzv^'
+noremap <silent> <expr> J (search('^\n.', 'Wen') - line('.')) . 'jzv^'
 
 " Get back to where you were easily by setting a mark `p` before common jumps.
 " Return to the previous line with 'p or `p.
@@ -178,6 +193,17 @@ nmap <C-l> <C-w>l
 nnoremap <C-t> :tabedit %<CR>
 nnoremap <Leader>T :tabclose<CR>
 
+" Instead of stumbling into ex mode, repeat the last macro used.
+nnoremap Q @@
+
+" Makes D act like d, except it doesn’t save the cut text to a register. Helps
+" when I want to delete something without clobbering my unnamed register.
+nnoremap D "_d
+
+" Run the current line as if it were a command. Often more convenient than q:
+" when experimenting.
+nnoremap <leader>e :exe getline(line('.'))<cr>
+
 " Also helpful commands to note:
 "  Go to the first line of a file: gg
 "  Go to the last line of a file: G
@@ -192,14 +218,17 @@ nnoremap <Leader>T :tabclose<CR>
 "  Automatically fix comment length: gw
 "  Jump up 10 lines: 10k
 "  Jump down 10 lines: 10j
+"  Paste in insert mode: Ctrl + r
 "  Access registers: :reg
 "  Copy to clipboard register in nvim: "+y
 "  Check spellcheck suggestions: z=
 "  Comment out a line using Vim Commentary plugin: gcc
 
-" Show trailing whitespace.
-highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-match ExtraWhitespace /\s\+$/
+" These are autocommands to override any highlights from plugins.
+augroup ShowTrailingWhitespace
+    autocmd VimEnter * highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+    autocmd VimEnter * match ExtraWhitespace /\s\+$/
+augroup end
 
 " Strip trailing whitespace on file exit.
 autocmd BufWritePre * :%s/\s\+$//e
