@@ -127,6 +127,11 @@ tnoremap :;; ;;
 " Vim.
 vnoremap <LeftMouse> <Nop>
 
+" Make j and k move by wrapped lines unless a count is included, so that
+" 10j and 10k still work as expected.
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+
 " Remap for smoother vertical mobility based on visual lines, not actual lines.
 noremap <Up> g<Up>
 noremap <Down> g<Down>
@@ -149,6 +154,9 @@ noremap <silent> <expr> J (search('^\n.', 'Wen') - line('.')) . 'jzv^'
 nnoremap gg mpgg
 nnoremap G mpG
 nnoremap / mp/
+
+" Set the 'a mark in insert mode with `;1`.
+inoremap ;1 <c-o>ma
 
 " Easier indentation - does dot loose selection. (From what I understand, it
 " puts you back into visual mode after you indent.)
