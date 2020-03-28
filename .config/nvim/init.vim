@@ -193,6 +193,17 @@ nmap <C-l> <C-w>l
 nnoremap <C-t> :tabedit %<CR>
 nnoremap <Leader>T :tabclose<CR>
 
+" Instead of stumbling into ex mode, repeat the last macro used.
+nnoremap Q @@
+
+" Makes D act like d, except it doesn’t save the cut text to a register. Helps
+" when I want to delete something without clobbering my unnamed register.
+nnoremap D "_d
+
+" Run the current line as if it were a command. Often more convenient than q:
+" when experimenting.
+nnoremap <leader>e :exe getline(line('.'))<cr>
+
 " Also helpful commands to note:
 "  Go to the first line of a file: gg
 "  Go to the last line of a file: G
@@ -213,9 +224,11 @@ nnoremap <Leader>T :tabclose<CR>
 "  Check spellcheck suggestions: z=
 "  Comment out a line using Vim Commentary plugin: gcc
 
-" Show trailing whitespace.
-highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-match ExtraWhitespace /\s\+$/
+" These are autocommands to override any highlights from plugins.
+augroup ShowTrailingWhitespace
+    autocmd VimEnter * highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+    autocmd VimEnter * match ExtraWhitespace /\s\+$/
+augroup end
 
 " Strip trailing whitespace on file exit.
 autocmd BufWritePre * :%s/\s\+$//e
