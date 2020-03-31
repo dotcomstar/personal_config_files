@@ -142,6 +142,7 @@ map <C-a> ^
 map <C-e> $
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
+cnoremap <C-a> <C-b>
 
 " Easier line navigation with capitalized movement commands.
 nnoremap H ^
@@ -171,6 +172,7 @@ nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K.  Y O U  T Y P E D  \
 " TODO: Return to previous line.
 
 " Copy all to clipboard (only works in NeoVim).
+" Note: This is the same as typing `:%y+`
 if has('nvim')
     nnoremap yA gg"+yG''
 endif
