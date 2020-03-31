@@ -106,9 +106,7 @@ nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 imap ;; <esc>
 vmap ;; <esc>
 imap jk <esc>
-vmap jk <esc>
 imap kj <esc>
-vmap kj <esc>
 
 " " The first line maps escape to the right shift key when you enter Vim, and the second line returns normal functionality to right shift key when you quit.
 " " This requires Linux with the xorg-xmodmap package installed.
@@ -127,14 +125,12 @@ tnoremap :;; ;;
 " Vim.
 vnoremap <LeftMouse> <Nop>
 
-" Make j and k move by wrapped lines unless a count is included, so that
-" 10j and 10k still work as expected.
+" Remap for smoother vertical mobility based on visual lines, not actual lines
+" unless a count is included, so that 10j and 10k still work as expected.
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
-
-" Remap for smoother vertical mobility based on visual lines, not actual lines.
-noremap <Up> g<Up>
-noremap <Down> g<Down>
+nnoremap <expr> <Up> (v:count == 0 ? 'g<Up>' : '<Up>')
+nnoremap <expr> <Down> (v:count == 0 ? 'g<Down>' : '<Down>')
 
 " Remap for nano-esque jumps to the beginning/end of a line.
 " Note: Use `0` to go to the first column of a line.
@@ -143,6 +139,15 @@ map <C-e> $
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 cnoremap <C-a> <C-b>
+
+" Make control + backspace delete entire words.
+" Note:  may not represent control + backspace on your machine.
+" To test this, use <C-q> or <C-v> and then hit the desired keys to find the
+" literal interpretation.
+" TODO: Add functionality to detect camel-case words. Integrate with the
+" camelcasemotion plugin.
+inoremap  <C-w>
+cnoremap  <C-w>
 
 " Easier line navigation with capitalized movement commands.
 nnoremap H ^
