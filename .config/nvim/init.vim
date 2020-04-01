@@ -9,9 +9,11 @@ set timeoutlen=1000  " Used for mapping delays (ms).
 set ttimeoutlen=10  " Used for key code delays (ms).
 set maxmempattern=10000
 set termguicolors  " Allows pum menu opacity and squiggly lines for typos.
+" Note: If you have ugly colors, try `set notermguicolors` instead.
 
 " Editor Quality of Life
-set mouse=a  " Enable mouse support.
+" For full mouse support, use `set mouse=a`.
+set mouse=nic  " Enable mouse support but disable mouse selection.
 set backspace=indent,eol,start  " Allow the backspace key to delete any whitespace.
 colorscheme darkblue  " darkblue and molokai are nice in my opinion.
 autocmd VimEnter * silent! colorscheme molokai  " Set colorscheme to molokai if it exists.
@@ -39,22 +41,6 @@ set cmdheight=2  " Set the height of the command bar at the bottom.
 set showcmd  " Show the last entered command in the bottom bar.
 let g:mapleader="\<Space>"
 let g:maplocalleader="\<Space>"
-
-" Tab Settings
-filetype off  " Reset filetype indentation first...
-filetype indent on  " Enable filetype-specific indentation preferences.
-set expandtab  " Convert tabs to spaces.
-set softtabstop=4  " How many spaces to add and remove for a simulated tab.
-set shiftwidth=4  " Set the default tab stop to 4 spaces.
-set softtabstop=4  " Treat space 'tabs' as a single character.
-autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
-autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4
-autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
-autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
-autocmd Filetype make setlocal noexpandtab tabstop=8 shiftwidth=8
-autocmd Filetype ruby setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
-" autocmd FileType ocaml setlocal
-au BufRead,BufNewFile *.ml,*.mli compiler ocaml
 
 " Set backup files
 " Note: the "//" at the end of each directory means that file names will be
@@ -125,6 +111,22 @@ tnoremap :;; ;;
 " Vim.
 vnoremap <LeftMouse> <Nop>
 
+" Add literal options for common symbols.
+inoremap ;a α
+inoremap ;b β
+inoremap ;D Δ
+inoremap ;d δ
+inoremap ;t θ
+inoremap ;l λ
+inoremap ;m μ
+inoremap ;P Π
+inoremap ;p π
+inoremap ;S Σ
+inoremap ;s σ
+inoremap ;O Ω
+inoremap ;o ω
+inoremap ;w ω
+
 " Remap for smoother vertical mobility based on visual lines, not actual lines
 " unless a count is included, so that 10j and 10k still work as expected.
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
@@ -150,8 +152,8 @@ inoremap  <C-w>
 cnoremap  <C-w>
 
 " Easier line navigation with capitalized movement commands.
-nnoremap H ^
-nnoremap L $
+nnoremap H b
+nnoremap L w
 noremap <silent> <expr> K (line('.') - search('^\n.\+$', 'Wenb')) . 'kzv^'
 noremap <silent> <expr> J (search('^\n.', 'Wen') - line('.')) . 'jzv^'
 
@@ -161,9 +163,6 @@ nnoremap gg mpgg
 nnoremap G mpG
 nnoremap / mp/
 
-" Set the 'a mark in insert mode with `;1`.
-inoremap ;1 <c-o>ma
-
 " Easier indentation - does dot loose selection. (From what I understand, it
 " puts you back into visual mode after you indent.)
 vnoremap > >gv
@@ -172,21 +171,21 @@ vnoremap < <gv
 " Catch accidental "U" usage.
 nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K.  Y O U  T Y P E D  \"U\". ==== > > "<CR>
 
-" Select all.
-" nnoremap A ggVG
-" TODO: Return to previous line.
-
-" Copy all to clipboard (only works in NeoVim).
-" Note: This is the same as typing `:%y+`
-if has('nvim')
-    nnoremap yA gg"+yG''
-endif
-
 " I am too lazy to take my hands off shift. command! is preferred over
-" cnoremap since you have to hit enter first.
+" cnoremap since you have to hit enter before the string is checked.
 command! WQ wq
 command! Wq wq
 command! W w
+
+" Delete to end of line in insert mode.
+inoremap <C-d> <C-o>D
+" Note: Delete to beginning of line in insert mode with <C-u>
+
+" Increment with + and decrement with -
+noremap + <C-a>
+noremap - <C-x>
+noremap g+ g<C-a>
+noremap g- g<C-x>
 
 " Remap more common undo and redo buttons for non-vimmers.
 nnoremap <C-z> u
@@ -197,6 +196,21 @@ inoremap <C-y> <C-o><C-r>
 " Map Ctrl-s to save for non-vimmers.
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <C-o>:w<CR>
+
+" Add more sensible paste in insert mode:
+if has('nvim')
+    inoremap <C-v> <C-r>+
+endif
+
+" Map shift-arrows to visual mode (select) for non-vimmers.
+nnoremap <S-Left> <C-v><Left>
+nnoremap <S-Right> <C-v><Right>
+nnoremap <S-Up> <C-v><Up>
+nnoremap <S-Down> <C-v><Down>
+vnoremap <S-Up> <Up>
+vnoremap <S-Down> <Down>
+vnoremap <C-Up> {
+vnoremap <C-Down> }
 
 " Remap for easier window movement.
 nmap <C-h> <C-w>h
@@ -223,24 +237,28 @@ nnoremap <leader>e :exe getline(line('.'))<cr>
 "  Go to the first line of a file: gg
 "  Go to the last line of a file: G
 "  Go to the fist column of a line: 0
-"  Open a new window: sp (on top) or vsp (side to side)
+"  Enter normal mode from insert mode: Ctrl + [
+"  Open a new window: :sp (on top) or :vsp (side to side)
 "  Cut line: dd
 "  Paste from Vim clipboard: p
-"  Insert tab character in insert mode: ctrl + v + tab, or ctrl + q + tab
-"    in windows mode, which is the default. ctrl + i occasionally works, but
+"  Insert tab character in insert mode: Ctrl + v + tab, or Ctrl + q + tab
+"    in windows mode, which is the default. Ctrl + i occasionally works, but
 "    is not consistent.
 "  Run one command and then return automatically to insert mode
 "  Automatically fix comment length: gw
 "  Jump up 10 lines: 10k
 "  Jump down 10 lines: 10j
 "  Paste in insert mode: Ctrl + r
+"  Select all: :%
 "  Access registers: :reg
 "  Copy to clipboard register in nvim: "+y
+"  Copy all to clipboard (only works in NeoVim): :%y+
 "  Check spellcheck suggestions: z=
 "  Comment out a line using Vim Commentary plugin: gcc
 
 " These are autocommands to override any highlights from plugins.
-augroup ShowTrailingWhitespace
+augroup CustomHighlighting
+    " Show Trailing Whitespace
     autocmd VimEnter * highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
     autocmd VimEnter * match ExtraWhitespace /\s\+$/
 augroup end
@@ -448,10 +466,12 @@ Plug 'airblade/vim-gitgutter'
 "Plug 'ntpeters/vim-better-whitespace'
 Plug 'mhinz/vim-startify'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}  " Only run for Markdown files.
+Plug 'plasticboy/vim-markdown'  " Requires 'godlygeek/tabular' before it.
 "Plug 'TaskList.vim'  " TODO Checker.
 Plug 'daeyun/vim-matlab'
 Plug 'bkad/CamelCaseMotion'  " Add CamelCase and snake_case as word objects.
 Plug 'coderifous/textobj-word-column.vim'  " Add vertical columns as a word object with `ic` and `ac`.
+Plug 'mbbill/undotree'
 
 " Syntax
 Plug 'liuchengxu/graphviz.vim'
@@ -495,18 +515,13 @@ endfunction
 "let g:instant_markdown_allow_unsafe_content = 1
 "let g:instant_markdown_allow_external_content = 0
 
-" Note: This makes vim load too slowly.
-" Automatically load NERDTree and TagbarToggle upon Vim boot.
-" autocmd VimEnter * NERDTree
-" autocmd VimEnter * TagbarToggle
-" " Jump to the previous (main) window.
-" autocmd VimEnter * wincmd p
-"
-" " Find the current file in NERDTree.
-" map <Leader>f :NERDTreeFind<cr>
-"
-" " Automatically close Vim if NERDTree is the last open buffer.
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Virtual Text
+let g:ale_warn_about_trailing_whitespac = 0
+highlight link ALEVirtualTextStyleError ALEVirtualTextError
+highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
+highlight link ALEVirtualTextError ErrorMsg
+highlight link ALEVirtualTextWarning WarningMsg
+highlight link ALEVirtualTextInfo Comment
 
 " Add code folding.
 set nofoldenable  " Ensure files are opened unfolded.
@@ -534,6 +549,14 @@ nnoremap <Leader>a\| :Tabularize /\|<CR>
 vnoremap <Leader>a\| :Tabularize /\|<CR>
 nnoremap <Leader>A\| :Tabularize /\|\zs<CR>
 vnoremap <Leader>A\| :Tabularize /\|\zs<CR>
+
+
+"Markdown
+let g:vim_markdown_math = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_follow_anchor = 1
+let g:vim_markdown_fenced_languages = ['csharp=cs','js=javascript','viml=vim','rust','go','help','vim','javascript','cs']
+let g:vim_markdown_folding_disabled = 1
 
 " Set pum to be transparent. termguicolors must be enabled for it to look
 " nice.
