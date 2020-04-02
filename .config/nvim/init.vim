@@ -153,9 +153,11 @@ cnoremap  <C-w>
 
 " Easier line navigation with capitalized movement commands.
 nnoremap H b
-nnoremap L w
+nnoremap L e
 noremap <silent> <expr> K (line('.') - search('^\n.\+$', 'Wenb')) . 'kzv^'
 noremap <silent> <expr> J (search('^\n.', 'Wen') - line('.')) . 'jzv^'
+" In the same vein, make <C-Right> function like other editors.
+nnoremap <C-Right> e
 
 " Get back to where you were easily by setting a mark `p` before common jumps.
 " Return to the previous line with 'p or `p.
