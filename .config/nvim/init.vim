@@ -91,13 +91,13 @@ nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 " Note: By default, <C-[> also works.
 imap ;; <esc>
 vmap ;; <esc>
-imap jk <esc>
-imap kj <esc>
+" imap jk <esc>
+" imap kj <esc>
 
-" " The first line maps escape to the right shift key when you enter Vim, and the second line returns normal functionality to right shift key when you quit.
+" " The first line maps escape to the caps lock key when you enter Vim, and the second line returns normal functionality to caps lock when you quit.
 " " This requires Linux with the xorg-xmodmap package installed.
-" au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x3E = Escape'
-" au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x3E = Shift_R'
+" au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+" au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
 
 " Remap :;; to ;; for use in Ocaml.
 " Note: If I used three semicolons, then two semicolons would pause to check
@@ -150,6 +150,7 @@ cnoremap <C-a> <C-b>
 " camelcasemotion plugin.
 inoremap  <C-w>
 cnoremap  <C-w>
+tnoremap  <C-w>
 
 " Easier line navigation with capitalized movement commands.
 nnoremap H b
@@ -378,7 +379,7 @@ augroup terminal_autocommands
 augroup end
 
 " Open File Explorer
-nnoremap <C-n> :Lexplore<C-m>
+nnoremap <Leader>fe :Lexplore<C-m>
 
 " Toggle the built-in NeoVim terminal
 let g:is_terminal_open = 0  " Off by default.
