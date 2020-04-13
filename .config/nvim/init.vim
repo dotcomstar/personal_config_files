@@ -236,6 +236,14 @@ nnoremap D "_d
 " when experimenting.
 nnoremap <leader>e :exe getline(line('.'))<cr>
 
+" Copy everything to the + register and close vim without saving.
+" This is used for temporary vim instances.
+" Note: Dangerous to use in regular files.
+if has('nvim')
+    nnoremap <M-End> :%y+<CR>:q!<CR>
+    inoremap <M-End> <Esc>:%y+<CR>:q!<CR>
+endif
+
 " Also helpful commands to note:
 "  Go to the first line of a file: gg
 "  Go to the last line of a file: G
@@ -258,6 +266,11 @@ nnoremap <leader>e :exe getline(line('.'))<cr>
 "  Copy all to clipboard (only works in NeoVim): :%y+
 "  Check spellcheck suggestions: z=
 "  Comment out a line using Vim Commentary plugin: gcc
+"  Navigate to next instance of letter: f
+"  Navigate to next instance of letter: F
+"  Move character one over: xp
+"  Replace character: r
+"  Delete the rest of the word and enter insert mode: cw
 
 " These are autocommands to override any highlights from plugins.
 augroup CustomHighlighting
