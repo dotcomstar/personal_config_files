@@ -83,6 +83,11 @@ if has("spell")
     vmap <F6> :<C-u>setlocal spell! spelllang=en_us<CR>
 endif
 
+" Copy all to clipboard (only works in NeoVim).
+if has('nvim')
+    nnoremap yA gg"+yG''
+endif
+
 " Toggle the ability to keep the cursor in the middle of the screen.
 set scrolloff=999  " Enabled by default.
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
