@@ -117,6 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 # Note: You can use Ctrl+l to pseudo-clear the screen.
+# Ctrl+t opens up a new bash tab in Ubuntu.
 
 # Some more aliases to avoid making mistakes:
 alias rm='rm -iv'
@@ -127,11 +128,17 @@ alias mv='mv -iv'
 alias vim='/usr/bin/nvim'
 alias vi='/usr/bin/vim'
 
+# Create a symbolic link to the nvim config file for ease of access.
+# ln -s ~/.config/nvim/init.vim ~/.nvimrc
+
 # Ensure that NeoVim is the default editor across the board.
 export VISUAL=/usr/bin/nvim
 export EDITOR="$VISUAL"
 git config --global core.editor "nvim"
 export PATH="$HOME/.rbenv/bin:$PATH"
+
+# An alias to enable automatic git GPG-key signing
+export GPG_TTY=$(tty)
 
 # Note: Open images with `xdg-open filename`, which opens the images with the
 # user's preferred application.
@@ -139,17 +146,6 @@ alias open='xdg-open'
 
 # Just having fun.
 alias countryroads='cd ~'
-
-# An alias to enable automatic git GPG-key signing
-export GPG_TTY=$(tty)
-
-# Send graphical apps to windows instead of loading natively in the terminal.
-export DISPLAY=:0
-
-# Enable Docker support from Windows Subsystem for Linux
-export DOCKER_HOST=tcp://localhost:2375
-
-# Add path for Ruby support. Dependent on local filesystem architecture.
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
