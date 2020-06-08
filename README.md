@@ -1,5 +1,5 @@
 <h1 align="center">Personal Config Files</h1>
-<p align="center">Coding is zen</p>
+<p align="center"> <i> :milky_way: Coding is zen :earth_americas: </i> </p>
 <p align="center">
   <a href=".config/nvim/init.vim"><img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg?logo=neovim&?logoWidth=40" /></a>
   <a href="https://linuxmint.com/about.php"><img src="https://img.shields.io/badge/OS-linux mint-green.svg?logo=linux-mint&?logoWidth=40" /></a>
@@ -10,12 +10,12 @@
   <img src="https://user-images.githubusercontent.com/32310882/74557301-dbebae80-4f2d-11ea-92a7-f59fff31b7bb.png" width="460" alt="Personal Logo">
 </p>
 
-This repository includes different Linux/Unix config files that I use for productivity in the terminal and online.
+This repository includes different :penguin: Linux/Unix config files that I use for productivity in the terminal and online.
 
 It includes my `bash`, `[v/nv]im`, `nano`, ... config files.
 
 
-## Screenshots
+## :see_no_evil: Screenshots :camera:
 
 ### Neovim
 
@@ -35,7 +35,7 @@ It includes my `bash`, `[v/nv]im`, `nano`, ... config files.
 <details>
 <summary>Screenshots (as of `Feb 14`)</summary>
 <br>
-<p><i>Currently under renovation.</i></p>
+<p><i>Currently under renovation :trollface:</i></p>
 </details>
 
 Inspiration for README taken from https://github.com/meain/dotfiles.
