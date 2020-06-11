@@ -5,7 +5,7 @@
   <a href="https://linuxmint.com/about.php"><img src="https://img.shields.io/badge/OS-linux mint-green.svg?logo=linux-mint&?logoWidth=40" /></a>
   <a href=".bashrc"><img src="https://img.shields.io/badge/Shell-bash-yellow.svg?logo=gnu-bash&?logoWidth=40&?logoColor=yellow" /></a>
   <img src="https://img.shields.io/badge/Browser-Firefox-orange.svg?logo=mozilla-firefox&?logoWidth=40" />
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgray.svg" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
   <br><br>
   <img src="https://user-images.githubusercontent.com/32310882/74557301-dbebae80-4f2d-11ea-92a7-f59fff31b7bb.png" width="460" alt="Personal Logo">
 </p>
