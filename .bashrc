@@ -135,7 +135,16 @@ alias vi='/usr/bin/vim'
 export VISUAL=/usr/bin/nvim
 export EDITOR="$VISUAL"
 git config --global core.editor "nvim"
+#git config --global core.pager "nvim -R"
+#git config --global color.pager no
 export PATH="$HOME/.rbenv/bin:$PATH"
+#export MANPAGER="nvim -c 'set ft=man' -"
+
+# # Enable using the nvim for man pages
+# export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+#     /usr/bin/nvim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+#     -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+#     -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 
 # An alias to enable automatic git GPG-key signing
 export GPG_TTY=$(tty)
