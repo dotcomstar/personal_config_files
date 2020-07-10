@@ -14,6 +14,15 @@ This repository includes different :penguin: Linux/Unix config files that I use 
 
 It includes my `bash`, `[v/nv]im`, `nano`, ... config files.
 
+## :rocket: Quick start
+**Note: The setup script will alter the config files already on your machine. It should save a backup, though.**
+
+Automatically link the config files to your machine by running
+```bash
+git clone https://github.com/dotcomstar/personal_config_files.git ~/personal_config_files
+cd ~/personal_config_files
+./setup.sh
+```
 
 ## :see_no_evil: Screenshots :camera:
 
