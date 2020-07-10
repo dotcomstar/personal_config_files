@@ -10,6 +10,8 @@ set ttimeoutlen=10  " Used for key code delays (ms).
 set maxmempattern=10000
 set termguicolors  " Allows pum menu opacity and squiggly lines for typos.
 " Note: If you have ugly colors, try `set notermguicolors` instead.
+let $PAGER=''
+" Handles the case where you start Vim normally and want to use Vim's "Man" function.
 
 " Editor Quality of Life
 " For full mouse support, use `set mouse=a`.
@@ -30,7 +32,6 @@ let &titlestring = '%t%( %m%r%)%( <%{get(g:, "cur_project", "")}>%)' .
            " \ '%( (%{getcwd()})%)%( %a%) - %(%{v:servername}%)'
 set ruler  " Always show current cursor coordinates at the bottom right.
 set number relativenumber  " Display relative line numbers for easier jumping.
-if has("spell") | set spell! spelllang=en_us | endif " Enable spell-check by default.
 
 " Normal Mode Quality of Life
 set list
@@ -41,6 +42,22 @@ set cmdheight=2  " Set the height of the command bar at the bottom.
 set showcmd  " Show the last entered command in the bottom bar.
 let g:mapleader="\<Space>"
 let g:maplocalleader="\<Space>"
+
+" Tab Settings
+filetype off  " Reset filetype indentation first...
+filetype indent on  " Enable filetype-specific indentation preferences.
+set expandtab  " Convert tabs to spaces.
+set softtabstop=4  " How many spaces to add and remove for a simulated tab.
+set shiftwidth=4  " Set the default tab stop to 4 spaces.
+set softtabstop=4  " Treat space 'tabs' as a single character.
+autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype make setlocal noexpandtab tabstop=8 shiftwidth=8
+autocmd Filetype ruby setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+" autocmd FileType ocaml setlocal
+au BufRead,BufNewFile *.ml,*.mli compiler ocaml
 
 " Set backup files
 " Note: the "//" at the end of each directory means that file names will be
@@ -76,9 +93,16 @@ set smartcase
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+
+" Handle spell-check
+function! EnableSpellcheck()
+    setlocal spell! spelllang=en_us
+endfunction
+
+if has("spell") | call EnableSpellcheck() | endif " Enable spell-check by default.
 " Toggle spell-check with F6.
 if has("spell")
-    map <F6> :setlocal spell! spelllang=en_us<CR>
+    map <F6> :call EnableSpellcheck()<CR>
     imap <F6> <C-o>:setlocal spell! spelllang=en_us<CR>
     vmap <F6> :<C-u>setlocal spell! spelllang=en_us<CR>
 endif
