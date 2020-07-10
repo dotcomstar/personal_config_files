@@ -28,5 +28,8 @@ function linkDotfile {
 
 linkDotfile .vimrc
 linkDotfile .nanorc
-linkDotfile .bashrc
 linkDotfile .config/nvim/init.vim
+ln -s "${dotfilesDir}/.config/nvim/init.vim" "${HOME}/.nvimrc"
+linkDotfile .bashrc
+source ~/.bashrc
+
