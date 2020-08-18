@@ -58,6 +58,7 @@ autocmd Filetype make setlocal noexpandtab tabstop=8 shiftwidth=8
 autocmd Filetype ruby setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 " autocmd FileType ocaml setlocal
 au BufRead,BufNewFile *.ml,*.mli compiler ocaml
+au BufRead,BufNewFile Jenkinsfile setf groovy
 
 " Set backup files
 " Note: the "//" at the end of each directory means that file names will be
