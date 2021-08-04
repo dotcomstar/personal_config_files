@@ -1,9 +1,20 @@
 # This script will generate looping CSGO binds for each non-blank line in the given file.
 
+import random
+import os 
+from os import listdir
+
+copypasta_path = "[insert path here]"
 copypastas_file = "copypasta.txt"
 keybind = "F9"
 
-lines = open(copypastas_file).read().splitlines()
+# Delete previous config files.
+for file_name in listdir(copypasta_path):
+    if file_name.endswith('.cfg'):
+        os.remove(copypasta_path + file_name)
+
+lines = open(copypastas_file).read().split('\n\n')
+random.shuffle(lines)
 counter = 1
 for line in lines:
     if line == '':
